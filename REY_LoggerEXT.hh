@@ -1,7 +1,7 @@
 /** 
  * std libraries like iostream or string actually is like 50K lines long 
  * 
- * so you can use alternative amVK::cout ['console out']
+ * so you can use alternative REY::cout ['console out']
  * if you define this, won't include <iostream>
  */
 
@@ -60,7 +60,7 @@
     ╹ ╹   ┗━╸┗━┛┗━┛╺━╸┗━╸╹ ╹
   */
   #ifdef _WIN32
-    #define LOG_EX(x) LOG(x << "  [stackTrace below]: "); amVK_only_stacktrace(stderr); //Cuttoff from BLI_system_backtrace, only for windows....
+    #define LOG_EX(x) LOG(x << "  [stackTrace below]: "); REY_only_stacktrace(stderr); //Cuttoff from BLI_system_backtrace, only for windows....
   #else
     #define LOG_EX(x) LOG(x); BLI_system_backtrace(stderr); //linux does better job. and default BLI_system_backtrace is cool too!
   #endif
@@ -73,10 +73,10 @@
    * Options to turn off parts of LOGGER, support....
    * Options that should be turned on/off from Makefiles
    * 
-   * MK1: [old stuffs made during MK1.... amVK_CX]
+   * MK1: [old stuffs made during MK1.... REY_CX]
    * MK2: everything that is in MK2....
    */
-  #if defined(amVK_MK1_NOOB_LOG)
+  #if defined(REY_MK1_NOOB_LOG)
     #define LOG_MK1(x) LOG(x)
     #define LOG_LOOP_MK1(log_heading, iterator_var, loop_limit, log_inside_loop) LOG_LOOP(log_heading, iterator_var, loop_limit, log_inside_loop)
   #else
@@ -84,7 +84,7 @@
     #define LOG_LOOP_MK1(log_heading, iterator_var, loop_limit, log_inside_loop)
   #endif
 
-  #if defined(amVK_MK2_NOOB_LOG)
+  #if defined(REY_MK2_NOOB_LOG)
     #define LOG_MK2(x) LOG(x)
     #define LOG_LOOP_MK2(log_heading, iterator_var, loop_limit, log_inside_loop) LOG_LOOP(log_heading, iterator_var, loop_limit, log_inside_loop)
   #else
@@ -92,12 +92,12 @@
     #define LOG_LOOP_MK2(log_heading, iterator_var, loop_limit, log_inside_loop)
   #endif
 
-  #if defined(amVK_HISTORY)
+  #if defined(REY_HISTORY)
     #define amFUNC_HISTORY() LOG(__FUNC_MANGLED__)
   #else
     #define amFUNC_HISTORY()
   #endif
-  #if defined(amVK_HISTORY_INTERNAL)
+  #if defined(REY_HISTORY_INTERNAL)
     #define amFUNC_HISTORY_INTERNAL() LOG(__FUNC_MANGLED__)
   #else
     #define amFUNC_HISTORY_INTERNAL()

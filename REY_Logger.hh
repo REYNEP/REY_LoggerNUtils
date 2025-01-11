@@ -1,9 +1,9 @@
 /**
  * HOW TO USE
- *   option-1:- Use CMAKE add_subdirectory(amVK_LoggerNUtils)
+ *   option-1:- Use CMAKE add_subdirectory(REY_LoggerNUtils)
  *   option-2:- 
  *      1. define REY_LOGGER_IMPLEMENTATION in one of the TRANSLATION_UNITs
- *      2. `include(${amVK_LoggerNUtils}/REY_Fetch_fmk.cmake)` lib_fmt will be automatically fetched
+ *      2. `include(${REY_LoggerNUtils}/REY_Fetch_fmk.cmake)` lib_fmt will be automatically fetched
  *      3. 
  *         target_link_libraries(<idk> fmt::fmt)
  *         target_include_directories(<idk> PUBLIC fmt::fmt)
@@ -11,7 +11,7 @@
  *              idk = TRANSLATION_UNIT that you defined REY_LOGGER_IMPLEMENTATION
  * 
  * 
- * This file should be fully independant of any amVK Headers
+ * This file should be fully independant of any REY Headers
  *  - I also made it super light.... it calls no `#include`, but there's a MACRO: REY_LOGGER_IMPLEMENTATION now
  *  - #define REY_LOGGER_IMPLEMENTATION    [in one of the .cpp files]
  *
@@ -22,20 +22,20 @@
  * 
  */
 
- /** pragma + include guard, cz its saferrrr, iguess.... & amVK_LOGGER is more like 'published' as separate gist too 😁 */
+ /** pragma + include guard, cz its saferrrr, iguess.... & REY_Logger is more like 'published' as separate gist too 😁 */
 #pragma once
 #ifndef REY_LOGGER_HH
 #define REY_LOGGER_HH
 
 
-#define amVK_LOG(x) amVK::cout << x << amVK::endl;
-#define amVK_LOG_LOOP(log_heading, iterator_var, loop_limit, log_inside_loop) \
-    amVK_LOG(""); \
-    amVK_LOG(log_heading); \
+#define REY_LOG(x) REY::cout << x << REY::endl;
+#define REY_LOG_LOOP(log_heading, iterator_var, loop_limit, log_inside_loop) \
+    REY_LOG(""); \
+    REY_LOG(log_heading); \
     for (int iterator_var = 0, lim = static_cast<int>(loop_limit); iterator_var < lim; iterator_var++) { \
-        amVK_LOG(log_inside_loop); \
+        REY_LOG(log_inside_loop); \
     } \
-    amVK_LOG("");
+    REY_LOG("");
 
 /**
    ╻ ╻   ╻  ┏━┓┏━╸   ┏━╸╻ ╻
@@ -43,49 +43,49 @@
    ╹ ╹   ┗━╸┗━┛┗━┛╺━╸┗━╸╹ ╹
  */
 #ifdef _WIN32
-#define amVK_LOG_EX(x) amVK_LOG(x << "  [stackTrace below]: "); amVK_only_stacktrace(0); //Cuttoff from BLI_system_backtrace, only for windows....
+#define REY_LOG_EX(x) REY_LOG(x << "  [stackTrace below]: "); REY_only_stacktrace(0); //Cuttoff from BLI_system_backtrace, only for windows....
 #else
-#define amVK_LOG_EX(x) amVK_LOG(x); BLI_system_backtrace(0); //linux does better job. and default BLI_system_backtrace is cool too!
+#define REY_LOG_EX(x) REY_LOG(x); BLI_system_backtrace(0); //linux does better job. and default BLI_system_backtrace is cool too!
 #endif
 
 
 
  /** Made, so that we don't have to include <iostream> or <string> just cz we need to log */
-class amVK_Logger {
+class REY_Logger {
   public:
-    amVK_Logger() {}
-    ~amVK_Logger() {}
+    REY_Logger() {}
+    ~REY_Logger() {}
 
     /** if it says 'more than one overload found': try this https://www.cplusplus.com/reference/ostream/ostream/operator<< */
-    amVK_Logger& operator<<(const char c);
-    amVK_Logger& operator<<(const char* txt);
-    amVK_Logger& operator<<(const wchar_t* txt);
-    amVK_Logger& operator<<(const int num);
-    amVK_Logger& operator<<(const unsigned int num);
-    amVK_Logger& operator<<(const unsigned long num); /** DWORD */
-    amVK_Logger& operator<<(const unsigned long long num);
-    amVK_Logger& operator<<(const double num);
-    amVK_Logger& operator<<(const long long num);
+    REY_Logger& operator<<(const char c);
+    REY_Logger& operator<<(const char* txt);
+    REY_Logger& operator<<(const wchar_t* txt);
+    REY_Logger& operator<<(const int num);
+    REY_Logger& operator<<(const unsigned int num);
+    REY_Logger& operator<<(const unsigned long num); /** DWORD */
+    REY_Logger& operator<<(const unsigned long long num);
+    REY_Logger& operator<<(const double num);
+    REY_Logger& operator<<(const long long num);
     /** But we can't/don't wanna have support for stuffs like std::string */
 };
 
-class amVK_ConsoleInput {
+class REY_ConsoleInput {
   public:
-    amVK_ConsoleInput() {}
-   ~amVK_ConsoleInput() {}
+    REY_ConsoleInput() {}
+   ~REY_ConsoleInput() {}
 
     void get(void);
 };
 
-namespace amVK {
+namespace REY {
 #ifdef REY_LOGGER_IMPLEMENTATION
-    amVK_Logger cout = amVK_Logger();  /** 'console out' */
+    REY_Logger cout = REY_Logger();  /** 'console out' */
     char endl = '\n';
-    amVK_ConsoleInput cin = amVK_ConsoleInput();  /** 'console in' */
+    REY_ConsoleInput cin = REY_ConsoleInput();  /** 'console in' */
 #else
-    extern amVK_Logger cout;
+    extern REY_Logger cout;
     extern char endl;
-    extern amVK_ConsoleInput cin;
+    extern REY_ConsoleInput cin;
 #endif
 };
 
@@ -93,28 +93,28 @@ namespace amVK {
 
 
 /**
- * for amVK Debug builds....
+ * for REY Debug builds....
  *
  * the above ones [CORE] are the core ones
- *  - amVK_LOG
- *  - amVK_LOG_LOOP
- *  - amVK_LOG_EX
+ *  - REY_LOG
+ *  - REY_LOG_LOOP
+ *  - REY_LOG_EX
  *
  * the below ones [debug purposes]
- *  - _LOG   [debug for amVK devs]
+ *  - _LOG   [debug for REY devs]
  *  - _LOG0  [GENERAL Logging... e.g. vkCreateInsntace, vkCreateDevice etc....]
  */
-#if defined(amVK_DEV_LOG)
-#define _LOG(x) amVK_LOG(x)
-#define _LOG_LOOP(log_heading, iterator_var, loop_limit, log_inside_loop) amVK_LOG_LOOP(log_heading, iterator_var, loop_limit, log_inside_loop)
+#if defined(REY_DEV_LOG)
+#define _LOG(x) REY_LOG(x)
+#define _LOG_LOOP(log_heading, iterator_var, loop_limit, log_inside_loop) REY_LOG_LOOP(log_heading, iterator_var, loop_limit, log_inside_loop)
 #else
 #define _LOG(x)
 #define _LOG_LOOP(log_heading, iterator_var, loop_limit, log_inside_loop)
 #endif
 
-#if defined(amVK_ZEN_LOG)
-#define _LOG0(x) amVK_LOG(x)
-#define _LOG_LOOP0(log_heading, iterator_var, loop_limit, log_inside_loop) amVK_LOG_LOOP(log_heading, iterator_var, loop_limit, log_inside_loop)
+#if defined(REY_ZEN_LOG)
+#define _LOG0(x) REY_LOG(x)
+#define _LOG_LOOP0(log_heading, iterator_var, loop_limit, log_inside_loop) REY_LOG_LOOP(log_heading, iterator_var, loop_limit, log_inside_loop)
 #else
 #define _LOG0(x)
 #define _LOG_LOOP0(log_heading, iterator_var, loop_limit, log_inside_loop)
@@ -125,17 +125,17 @@ namespace amVK {
 
 
  /**
-  * amVK_NoobTimer
+  * REY_NoobTimer
   */
 class _noob_timer;
 
 /** Made, so that we don't have to include <iostream> or <string> or <chrono> in every other file.... */
-class amVK_NoobTimer {
+class REY_NoobTimer {
 private:
     _noob_timer* m_NoobTimer = nullptr;
 public:
-    amVK_NoobTimer();
-    ~amVK_NoobTimer();
+    REY_NoobTimer();
+    ~REY_NoobTimer();
 
     void init(void);
     void log(void);
@@ -144,8 +144,8 @@ public:
 
 /** Make a array of this STRUCT (like below), then pass the  .time_spent to TIMER_STORE
  *   func_timer all[2] = {
- *     {"amVK_CreateDevice", 0.0},
- *     {"amVK_Pipeline", 0.0}
+ *     {"REY_CreateDevice", 0.0},
+ *     {"REY_Pipeline", 0.0}
  *   };
  */
 typedef struct noob_timer_store__ {
@@ -191,47 +191,47 @@ typedef struct noob_timer_store__ {
     } while (0)
 // THE NEXT VERSION WILL ME IMPLEMENTED BASED ON fmt
 // https://github.com/fmtlib/fmt
-// So i will be opening a SEMARATE REPO for this amVK_Logger
+// So i will be opening a SEMARATE REPO for this REY_Logger
 // This is the last update possibly for this GIST VERSION.
 
-amVK_Logger& amVK_Logger::operator<<(const char c) {
+REY_Logger& REY_Logger::operator<<(const char c) {
     fmt::print("{}", c);
     return *this;
 }
-amVK_Logger& amVK_Logger::operator<<(const char* txt) {
+REY_Logger& REY_Logger::operator<<(const char* txt) {
     fmt::print("{}", txt);
     return *this;
 }
-amVK_Logger& amVK_Logger::operator<<(const wchar_t* txt) {
+REY_Logger& REY_Logger::operator<<(const wchar_t* txt) {
     fmt::print(L"{}", txt);
     return *this;
 }
-amVK_Logger& amVK_Logger::operator<<(const int num) {
+REY_Logger& REY_Logger::operator<<(const int num) {
     fmt::print("{}", num);
     return *this;
 }
-amVK_Logger& amVK_Logger::operator<<(const unsigned int num) {
+REY_Logger& REY_Logger::operator<<(const unsigned int num) {
     fmt::print("{}", num);
     return *this;
 }
-amVK_Logger& amVK_Logger::operator<<(const unsigned long num) {
+REY_Logger& REY_Logger::operator<<(const unsigned long num) {
     fmt::print("{}", num);
     return *this;
 }
-amVK_Logger& amVK_Logger::operator<<(const unsigned long long num) {
+REY_Logger& REY_Logger::operator<<(const unsigned long long num) {
     fmt::print("{}", num);
     return *this;
 }
-amVK_Logger& amVK_Logger::operator<<(const double num) {
+REY_Logger& REY_Logger::operator<<(const double num) {
     fmt::print("{}", num);
     return *this;
 }
-amVK_Logger& amVK_Logger::operator<<(const long long num) {
+REY_Logger& REY_Logger::operator<<(const long long num) {
     fmt::print("{}", num);
     return *this;
 }
 
-void amVK_ConsoleInput::get(void) {
+void REY_ConsoleInput::get(void) {
     std::cin.get();
 }
 
@@ -244,29 +244,29 @@ public:
     std::chrono::time_point<std::chrono::high_resolution_clock> time_start = {}, time_now = {};
 } noob_timer;
 
-amVK_NoobTimer::amVK_NoobTimer(void) {
-    amVK_NoobTimer::init();
+REY_NoobTimer::REY_NoobTimer(void) {
+    REY_NoobTimer::init();
 }
 
-amVK_NoobTimer::~amVK_NoobTimer(void) {
+REY_NoobTimer::~REY_NoobTimer(void) {
     delete m_NoobTimer;
 }
 
-void amVK_NoobTimer::init(void) {
+void REY_NoobTimer::init(void) {
     if (m_NoobTimer == nullptr) {
         m_NoobTimer = new _noob_timer();
     }
     m_NoobTimer->time_start = std::chrono::high_resolution_clock::now();
 }
 
-void amVK_NoobTimer::log(void) {
+void REY_NoobTimer::log(void) {
     m_NoobTimer->time_now = std::chrono::high_resolution_clock::now();
-    amVK_LOG(
+    REY_LOG(
         ((std::chrono::duration<double>)(m_NoobTimer->time_now - m_NoobTimer->time_start)).count()
     );
 }
 
-double amVK_NoobTimer::get(void) {
+double REY_NoobTimer::get(void) {
     m_NoobTimer->time_now = std::chrono::high_resolution_clock::now();
     return (double)((std::chrono::duration<double>)(m_NoobTimer->time_now - m_NoobTimer->time_start)).count();
 }
@@ -327,7 +327,7 @@ double amVK_NoobTimer::get(void) {
 void BLI_system_backtrace(int output = 0);   //There are Other Cool usable BLI_*_* functions too inside #ifdef REY_LOGGER_IMPLEMENTATION
 /** \todo impliment only stack trace till certain levels.... and not ABBORT.... */
 #if defined(_WIN32)
-void amVK_only_stacktrace(int output = 0);
+void REY_only_stacktrace(int output = 0);
 #endif
 #define amASSERT(x) if(x) BLI_system_backtrace(0)
 #else
@@ -335,7 +335,7 @@ void amVK_only_stacktrace(int output = 0);
 #endif
 
 
-  /** impl in amVK_Logger.cpp */
+  /** impl in REY_Logger.cpp */
 #ifdef REY_LOGGER_IMPLEMENTATION
 #ifdef _WIN32
 #include <windows.h>
@@ -697,12 +697,12 @@ static void bli_load_symbols()
 
 void BLI_system_backtrace(int output)
 {
-    // amVK MOD
+    // REY MOD
     FILE* fp = stdout;
     if (output == 1) {
         fp = stderr;
     }
-    // amVK MOD
+    // REY MOD
     SymInitialize(GetCurrentProcess(), NULL, TRUE);
     bli_load_symbols();
     if (current_exception) {
@@ -736,7 +736,7 @@ static void BLI_windows_handle_exception(EXCEPTION_POINTERS* exception)
     fflush(stderr);
 }
 
-void amVK_only_stacktrace(int output)
+void REY_only_stacktrace(int output)
 {
     FILE* _fp = stdout;
     if (output == 1) {
@@ -773,12 +773,12 @@ void amVK_only_stacktrace(int output)
   */
 void BLI_system_backtrace(int output)
 {
-    // amVK MOD
+    // REY MOD
     FILE* fp = stdout;
     if (output == 1) {
         fp = stderr;
     }
-    // amVK MOD
+    // REY MOD
 
     /* ------------- */
     /* Linux / Apple */

@@ -26,8 +26,8 @@ project("REY_LoggerNUtils_PROJECT" VERSION 0.1)
 
 # -------------------- Also Should be @ README.md
 # OUTPUT Options:- 
-#       Library Name:- amVK_LoggerNUtils
-#              Usage:- target_link_libraries(<target_name> amVK_LoggerNUtils)
+#       Library Name:- REY_LoggerNUtils
+#              Usage:- target_link_libraries(<target_name> REY_LoggerNUtils)
 #
 # Possible Untested Output Options:- [Might Not Work, cz of SCOPE Limitations]
 #       ${fmt::fmt} ---------> this is a "Target"
@@ -45,23 +45,20 @@ set(INC
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-message(STATUS ${CMAKE_CURRENT_SOURCE_DIR})
-
-
 
 # --------------------
                add_library (REY_LoggerNUtils ${SRC})
 target_include_directories (REY_LoggerNUtils PUBLIC ${INC})
 set_target_properties      (REY_LoggerNUtils  PROPERTIES  OUTPUT_NAME "lib-REY_LoggerNUtils"  PREFIX "") # OutPut File name
 
-# --------------------
+# --------fmt---------
 set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/.forge CACHE PATH "" FORCE)
 set(REY_Fetch_FMT_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.forge)
 
 include(./.REY_Fetch_fmt.cmake)           # Output:- fmt::fmt
 target_link_libraries      (REY_LoggerNUtils PUBLIC fmt::fmt)
 
-# --------------------
+# -----bli-assert-----
 if(WIN32)                                                       # for Windows operating system in general
     target_link_libraries  (REY_LoggerNUtils PUBLIC Dbghelp.lib Version.lib Shlwapi.lib)
 elseif(MSVC OR MSYS OR MINGW)                                   # for detecting Windows compilers
@@ -73,6 +70,6 @@ elseif(UNIX AND NOT APPLE)                                      # for Linux, BSD
 endif()
 # From:- https://stackoverflow.com/a/40152725
 
-# --------------------
+# ------install-------
 install(TARGETS REY_LoggerNUtils
   DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/.forge)

@@ -14,16 +14,16 @@
  * \note if you use PUSH_BACK macro.... remember to set .data & .n first
  */
 template<typename T>
-struct amVK_Array {
+struct REY_Array {
   T *data;            /** Pointer to the first element [But we dont do/keep_track_of MALLOC, cz.... DUH-Optimizations] */
   uint32_t n;
   uint32_t neXt = 0;  /** ahhh. neXt (2020) FX TV-series 😄 */
 
   /** CONSTRUCTOR - More like failsafes.... */
-  amVK_Array(T *D, uint32_t N) : data(D), n(N) {}
-  amVK_Array(T *D, uint32_t N, uint32_t NEXT) : data(D), n(N), neXt(NEXT) {}
-  amVK_Array(void) {data = nullptr; n = 0;}
-  ~amVK_Array() {}
+  REY_Array(T *D, uint32_t N) : data(D), n(N) {}
+  REY_Array(T *D, uint32_t N, uint32_t NEXT) : data(D), n(N), neXt(NEXT) {}
+  REY_Array(void) {data = nullptr; n = 0;}
+  ~REY_Array() {}
 
   /** 
    * inline hugely optimizes it, 
@@ -45,7 +45,7 @@ struct amVK_Array {
    * Default IMPLICIT copy-operator given by the compiler, TRY GodBolt 
    * \param otherArray: why const? https://www.cplusplus.com/articles/y8hv0pDG/  #Const correctness
    */
-  inline amVK_Array<T>& operator=(const amVK_Array<T>& otherArray) {
+  inline REY_Array<T>& operator=(const REY_Array<T>& otherArray) {
     data = otherArray.data;
     n = otherArray.n;
     neXt = otherArray.neXt;
@@ -59,43 +59,43 @@ struct amVK_Array {
 #ifdef REY_UTILS_IMPLIMENTATION
   #include "string.h"
   #include "stdlib.h"
-  void *amVK_memcpy(void *to, void *from, size_t size) {
+  void *REY_memcpy(void *to, void *from, size_t size) {
     return memcpy(to, from, size);
   }
 
-  void *amVK_malloc(size_t size) {
+  void *REY_malloc(size_t size) {
     return malloc(size);
   }
 
-  void amVK_ARRAY_PUSH_BACK_FILLED_LOG(uint32_t n, const char *var_name) { 
+  void REY_ARRAY_PUSH_BACK_FILLED_LOG(uint32_t n, const char *var_name) { 
     if (n == 0) { 
-      amVK_LOG_EX("amVK_Array<> " << var_name << ".n = 0;" << "Did you malloc? amASSERT here" << amVK::endl); 
+      REY_LOG_EX("REY_Array<> " << var_name << ".n = 0;" << "Did you malloc? amASSERT here" << REY::endl); 
     }
     else {
-      amVK_LOG_EX("amVK_Array FILLED!.... reUsing last SLOT"); 
+      REY_LOG_EX("REY_Array FILLED!.... reUsing last SLOT"); 
     }
   }
 #else
-  void *amVK_malloc(size_t size);
-  void *amVK_memcpy(void *to, void *from, size_t size);
-  void amVK_ARRAY_PUSH_BACK_FILLED_LOG(uint32_t n, const char *var_name);
+  void *REY_malloc(size_t size);
+  void *REY_memcpy(void *to, void *from, size_t size);
+  void REY_ARRAY_PUSH_BACK_FILLED_LOG(uint32_t n, const char *var_name);
 #endif
 
 /** reUse, cz we dont want it to Crash... and if doesn't have much effect */
-#define amVK_ARRAY_PUSH_BACK(var) \
+#define REY_ARRAY_PUSH_BACK(var) \
   if (var.neXt >= var.n) { \
-    amVK_ARRAY_PUSH_BACK_FILLED_LOG(var.n, #var); \
+    REY_ARRAY_PUSH_BACK_FILLED_LOG(var.n, #var); \
     var.neXt--; \
   } \
   var.data[var.neXt++]
 
-#define amVK_ARRAY_PUSH_BACK_SAFE(var) var.data[var.neXt++]
+#define REY_ARRAY_PUSH_BACK_SAFE(var) var.data[var.neXt++]
 
-#define amVK_ArrayDYN_PUSH_BACK(var)      amVK_ARRAY_PUSH_BACK(var)
-#define amVK_ArrayDYN_PUSH_BACK_SAFE(var) amVK_ARRAY_PUSH_BACK_SAFE(var)
+#define REY_ArrayDYN_PUSH_BACK(var)      REY_ARRAY_PUSH_BACK(var)
+#define REY_ArrayDYN_PUSH_BACK_SAFE(var) REY_ARRAY_PUSH_BACK_SAFE(var)
 // Its like you are flagging it 'SAFE'
 
-#define amVK_ARRAY_IS_ELEMENT(array, bool_var, match_what) \
+#define REY_ARRAY_IS_ELEMENT(array, bool_var, match_what) \
       for (uint32_t i = 0; i < array.n; i++) { \
         if (array.data[i] == match_what) { \
           bool_var = true; \
@@ -111,12 +111,12 @@ struct amVK_Array {
  * .n doesn't mean size anymore.... use \fn size() 
  */
 template<typename T> 
-struct amVK_ArrayDYN : public amVK_Array<T> {
-  amVK_ArrayDYN(uint32_t n) : amVK_Array<T>() {
+struct REY_ArrayDYN : public REY_Array<T> {
+  REY_ArrayDYN(uint32_t n) : REY_Array<T>() {
     this->data = new T[n];
     this->n = n;
   }
-  ~amVK_ArrayDYN() {}
+  ~REY_ArrayDYN() {}
 
   /** you can Delete this object instance after calling this function */
   inline void _delete(void) { delete[] this->data; }
@@ -130,8 +130,8 @@ struct amVK_ArrayDYN : public amVK_Array<T> {
    */
   inline bool should_resize(void) { return (bool)(this->neXt >= this->n); }
 
-  using amVK_Array<T>::neXt;
-  using amVK_Array<T>::data;
+  using REY_Array<T>::neXt;
+  using REY_Array<T>::data;
 
   /**
    * data[n] = data[neXt-1]
@@ -153,11 +153,11 @@ struct amVK_ArrayDYN : public amVK_Array<T> {
 };
 
 template<typename T>
-void amVK_ArrayDYN<T>::resize(double size_mul) {
-  amVK_LOG_EX("Resizing array :( " << this->n);
+void REY_ArrayDYN<T>::resize(double size_mul) {
+  REY_LOG_EX("Resizing array :( " << this->n);
   
-  amVK_ArrayDYN<T> _NewArray(this->n*size_mul);
-  amVK_memcpy(_NewArray.data, this->data, this->n * sizeof(T));
+  REY_ArrayDYN<T> _NewArray(this->n*size_mul);
+  REY_memcpy(_NewArray.data, this->data, this->n * sizeof(T));
   delete[] this->data;
 
   this->data = _NewArray.data;
@@ -167,16 +167,16 @@ void amVK_ArrayDYN<T>::resize(double size_mul) {
 
 /** GodBolt Test
 
-      // [MemCpy based] Allows amVK_Array<T> smth = {1, 2, 3, ...};     and    amVK_Array<T> smth{1, 2, 3 };      why this [and not operator=] https://stackoverflow.com/q/16935295
-      amVK_Array(std::initializer_list<T> ilist) {
+      // [MemCpy based] Allows REY_Array<T> smth = {1, 2, 3, ...};     and    REY_Array<T> smth{1, 2, 3 };      why this [and not operator=] https://stackoverflow.com/q/16935295
+      REY_Array(std::initializer_list<T> ilist) {
         n = ilist.size();
         // if (n > 0) {  Not really needed: [https://stackoverflow.com/q/1087042], tho we must delete...
         data = new T[n];                            //do remember to delete[] yourself
         memcpy(data, ilist.begin(), n * sizeof(T));
         neXt = n;
       }
-      // For Optimization Purposes....  when called in 2 lines amVK_Array<T> smth; smth = {1, 2, 3};
-      amVK_Array<T>& operator=(std::initializer_list<T> ilist) {
+      // For Optimization Purposes....  when called in 2 lines REY_Array<T> smth; smth = {1, 2, 3};
+      REY_Array<T>& operator=(std::initializer_list<T> ilist) {
         n = ilist.size();
         data = new T[n];
         memcpy(data, ilist.begin(), n * sizeof(T));
@@ -188,15 +188,15 @@ void amVK_ArrayDYN<T>::resize(double size_mul) {
 
       int main(void) {
         // Calls CONSTRUCTOR with initializer list
-        amVK_Array<double> bunch_of_doubles2 = {100.0, 200.0};
+        REY_Array<double> bunch_of_doubles2 = {100.0, 200.0};
 
         // Calls default constructor
-        amVK_Array<double> bunch_of_doubles;
+        REY_Array<double> bunch_of_doubles;
         // Calls operator=
         bunch_of_doubles = {0.0, 1.0, 2.0, 3.0};
         // So combining both of these actually saves CPU time
 
-        amVK_Array<double> another_bunch_of_doubles = bunch_of_doubles;
+        REY_Array<double> another_bunch_of_doubles = bunch_of_doubles;
         return 0;
       }
 */
@@ -206,7 +206,7 @@ void amVK_ArrayDYN<T>::resize(double size_mul) {
 
 
 // VK_RESULT is int
-#define amVK_RESULT int32_t
+#define REY_RESULT int32_t
 
 
 /**
@@ -218,7 +218,7 @@ void amVK_ArrayDYN<T>::resize(double size_mul) {
  *             ╚═╝  ╚═╝╚══════╝   ╚═╝╚══════╝ ╚═════╝    ╚═╝   ╚═╝╚══════╝╚══════╝        ┗━  ╹ ╹╹ ╹╹ ╹┗━╸┗━┛╹  ╹ ╹┗━╸┗━╸  ━┛
  */
                                                                              
-namespace amVK_Utils {
+namespace REY_Utils {
 /**
  * well.... 😉 see the implementation
  * \param how_far: How many bits [not BYTES] you wanna see
@@ -271,27 +271,27 @@ bool mergeSort(uint32_t first_index, uint32_t last_index, T *unsorted, uint32_t 
     uint32_t q = p_lim;                     //Second Half Start
     uint32_t q_lim = last_index+1;          //Second Half End
 
-    uint32_t *sorted_tmp = (uint32_t *) amVK_malloc(n * sizeof(uint32_t));
-    uint32_t *sorted_tmp2 = (uint32_t *) amVK_malloc(n * sizeof(uint32_t));   //for origIndex
+    uint32_t *sorted_tmp = (uint32_t *) REY_malloc(n * sizeof(uint32_t));
+    uint32_t *sorted_tmp2 = (uint32_t *) REY_malloc(n * sizeof(uint32_t));   //for origIndex
     uint32_t i = 0;
     while (true) {
         if (p == p_lim) {
-            if (last_index-q != n-i-1) {amVK_LOG("algorithm Failure code x010");}
+            if (last_index-q != n-i-1) {REY_LOG("algorithm Failure code x010");}
 
-            amVK_memcpy(unsorted, sorted_tmp, i*sizeof(uint32_t));
-            amVK_memcpy(origIndex, sorted_tmp2, i*sizeof(uint32_t));
+            REY_memcpy(unsorted, sorted_tmp, i*sizeof(uint32_t));
+            REY_memcpy(origIndex, sorted_tmp2, i*sizeof(uint32_t));
             //The Rest of unsorted is already SORTED
             return true;
         } 
         else if (q == q_lim) {
-            if (mid_index-p != n-i-1) {amVK_LOG("algorithm Failure code x010");}
+            if (mid_index-p != n-i-1) {REY_LOG("algorithm Failure code x010");}
 
             //Copy the rest of Unsorted-Left (a.k.a unsorted+p)
-            amVK_memcpy((unsorted+i), (unsorted+p), (p-first_index)*sizeof(uint32_t));
-            amVK_memcpy(unsorted, sorted_tmp, i*sizeof(uint32_t));
+            REY_memcpy((unsorted+i), (unsorted+p), (p-first_index)*sizeof(uint32_t));
+            REY_memcpy(unsorted, sorted_tmp, i*sizeof(uint32_t));
 
-            amVK_memcpy((origIndex+i), (origIndex+p), (p-first_index)*sizeof(uint32_t));
-            amVK_memcpy(origIndex, sorted_tmp2, i*sizeof(uint32_t));
+            REY_memcpy((origIndex+i), (origIndex+p), (p-first_index)*sizeof(uint32_t));
+            REY_memcpy(origIndex, sorted_tmp2, i*sizeof(uint32_t));
             return true;
         }
         
@@ -310,7 +310,7 @@ bool mergeSort(uint32_t first_index, uint32_t last_index, T *unsorted, uint32_t 
     /** out of while(true) loop, code should never come this far */
 }
 
-} //namespace amVK_Utils
+} //namespace REY_Utils
 
 
 
@@ -321,27 +321,27 @@ bool mergeSort(uint32_t first_index, uint32_t last_index, T *unsorted, uint32_t 
 #include <bitset>
 #include <cmath>
 
-void amVK_Utils::memview2b(void *ptr, uint32_t how_far) {
+void REY_Utils::memview2b(void *ptr, uint32_t how_far) {
     int n = ceil(how_far / 32);
 
     //we wanna show blocks of 32 bits
     uint32_t *xd = reinterpret_cast<uint32_t *> (ptr);
-    amVK_LOG("memview2b: ");
+    REY_LOG("memview2b: ");
     for (int i = 0; i < n; i++) {
         std::bitset<32> y(*(xd + i));
-        amVK_LOG("  " << y.to_string().c_str() << "    - [" << (uint32_t)(xd + i) << "]");
+        REY_LOG("  " << y.to_string().c_str() << "    - [" << (uint32_t)(xd + i) << "]");
     }
-    amVK_LOG("");
+    REY_LOG("");
 }
 
-void amVK_Utils::view_fp32(float fp32) {
+void REY_Utils::view_fp32(float fp32) {
     uint32_t the_input_int = *( reinterpret_cast<uint32_t *>(&fp32) );
     if (the_input_int & 0x80000000) {
-        amVK_LOG("-");
+        REY_LOG("-");
         the_input_int = (the_input_int << 1) >> 1;  //Wiki says right/left shift on unsigned int is gonna give '0' as new gen bits
     }
-    amVK_LOG("1.");
-    amVK_LOG(std::bitset<23>(the_input_int & 0x007FFFFF).to_string().c_str());   //0x007FFFF = Mantisse BIT-MASK
-    amVK_LOG(" * 2^" << (int)(the_input_int >> 23) - 127 << "\n\n");
+    REY_LOG("1.");
+    REY_LOG(std::bitset<23>(the_input_int & 0x007FFFFF).to_string().c_str());   //0x007FFFF = Mantisse BIT-MASK
+    REY_LOG(" * 2^" << (int)(the_input_int >> 23) - 127 << "\n\n");
 }
 #endif
