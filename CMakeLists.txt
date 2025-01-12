@@ -34,7 +34,16 @@ project("REY_LoggerNUtils_PROJECT" VERSION 0.1)
 #                              this is How you use it:-
 #                                   target_link_libraries(idk fmt::fmt)
 #                                   target_include_directories(idk PUBLIC fmt::fmt)
-# --------------------
+#
+#  INPUT Options:-
+set(REY_Fetch_FMT_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.forge)      # "Where should I Fetch Stuffs? ---> .forge [|see README.md for .forge info]"
+set(REY_Build_INSTALL_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/.install)    # "Where should I Install libs & includes? ---> .install"
+#        |- fmt uses these:-
+set(CMAKE_INSTALL_PREFIX ${REY_Build_INSTALL_DIR}            CACHE PATH "" FORCE)
+set(CMAKE_INSTALL_LIBDIR ${CMAKE_INSTALL_PREFIX}/extern-libs CACHE PATH "" FORCE)
+# [If you change above stuffs]:- Clean ENTIRE .forge directory. RERUN:- CONFIGURATION, BUILD, INSTALL
+# --------------------    
+
 
 
 set(SRC
@@ -52,10 +61,8 @@ target_include_directories (REY_LoggerNUtils PUBLIC ${INC})
 set_target_properties      (REY_LoggerNUtils  PROPERTIES  OUTPUT_NAME "lib-REY_LoggerNUtils"  PREFIX "") # OutPut File name
 
 # --------fmt---------
-set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/.forge CACHE PATH "" FORCE)
-set(REY_Fetch_FMT_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.forge)
-
-include(./.REY_Fetch_fmt.cmake)           # Output:- fmt::fmt
+                                         #  inptu:- ${REY_Fetch_FMT_BASE_DIR]
+include(./.REY_Fetch_fmt.cmake)          # Output:- fmt::fmt
 target_link_libraries      (REY_LoggerNUtils PUBLIC fmt::fmt)
 
 # -----bli-assert-----
@@ -72,4 +79,11 @@ endif()
 
 # ------install-------
 install(TARGETS REY_LoggerNUtils
-  DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/.forge)
+  DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/.install)
+
+# Install header files
+install(FILES 
+  ${CMAKE_CURRENT_SOURCE_DIR}/REY_Logger.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/REY_LoggerEXT.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/REY_Utils.hh
+  DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/.install/include/REY_LoggerNUtils)

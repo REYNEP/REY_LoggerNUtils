@@ -1,4 +1,6 @@
 # REY_LoggerNUtils `V0.2`
+- `V0.3`:- WIP
+    - `.install`:- it's a Folder for `lib-REY_LoggerNUtils.lib` & "external libraries" installation
 - `V0.2`:- Prefix_Tag:- 😢 REFACTORED ["amVK" --> "REY"]
 - `V0.1`:- Initial Commit: moving from [GIST ---> GITHUB]
 - `V0.1beta`:- https://gist.github.com/REYNEP/14a628ab270cae461a926ba212226492
@@ -21,10 +23,45 @@ int main(void) {
 
 
 ## Building / Using [SUMMARY]
-It's basically automatically handled 😉
-1. `fmt`:- automatically **"FETCHED"** --> Built --> Linked by CMAKE
-2. `target_link_libraries(<your_target_name> REY_LoggerNUtils)`
+It's basically automatically handled 😉:-
+```sh
+git clone https://github.com/REYNEP/REY_LoggerNUtils <path>
+# or 
+git add submoule https://github.com/REYNEP/REY_LoggerNUtils <path>
 
+# Way 1
+# Open `REY_LoggerNUtils` in VSCODE
+# F1 > CMake: Configure
+# F1 > CMake: Build
+# F1 > CMake: Install [Default Folder:- REY_LoggerNUtils/.install]
+
+# You can optinally take a glimpse @ "REY_LoggerNUtils/CMakeLists.txt" 😜 
+# for better understanding.... it's pretty small
+
+# Way 2:- add these in your CMakeLists.txt
+#      add_subdirectory( <path/to/REY_LoggerNUtils> )
+# target_link_libraries( <your_target_name>  REY_LoggerNUtils )
+
+# Way 3:- Meson & Premake Support [TBA]
+# Way 4:- Ninja/MakeFiles + Python Downloader Script [TBA]
+```
+
+1. `fmt`:- automatically **"FETCHED"** --> Built --> **"PUBLIC"** Linked to `REY_LoggerNUtils` by CMAKE
+    - **"PUBLIC"** Linked:- Will be available to you too:- 
+        - i.e. You can `#include <fmt/core.h>`
+        - & `fmt` will be automatically linked as you are linking `REY_LoggerNUtils` in CMAKE
+
+```py
+# --------------------
+# OUTPUT Options:- 
+#       Library Name:- REY_LoggerNUtils
+#              Usage:- target_link_libraries(<target_name> REY_LoggerNUtils)
+#
+# Possible Untested Output Options:- [Might Not Work, cz of SCOPE Limitations]
+#       fmt::fmt -----> target_link_libraries(REY_LoggerNUtils PUBLIC fmt::fmt)
+#                       Thats what we did
+# --------------------
+```
 
 
 </br>
@@ -69,25 +106,3 @@ It's basically automatically handled 😉
 </br>
 </br>
 </br>
-
-
-
-
-## Building / Using [Full Explanation]
-1. `fmt`:- automatically **"FETCHED"** by `CMAKE` ----> Built & **"PUBLIC"** Linked too
-    - **"PUBLIC"** Linked:- You can use `fmt` directly (e.g. `<fmt/core.hh>`) if you do:-
-        - `target_link_libraries(<target_name> REY_LoggerNUtils)`
-
-```py
-# --------------------
-# OUTPUT Options:- 
-#       Library Name:- REY_LoggerNUtils
-#              Usage:- target_link_libraries(<target_name> REY_LoggerNUtils)
-#
-# Possible Untested Output Options:- [Might Not Work, cz of SCOPE Limitations]
-#       ${fmt::fmt} ---------> this is a "Target"
-#                              this is How you use it:-
-#                                   target_link_libraries(idk fmt::fmt)
-#                                   target_include_directories(idk PUBLIC fmt::fmt)
-# --------------------
-```
