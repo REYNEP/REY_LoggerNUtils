@@ -61,8 +61,8 @@ target_include_directories (REY_LoggerNUtils PUBLIC ${INC})
 set_target_properties      (REY_LoggerNUtils  PROPERTIES  OUTPUT_NAME "lib-REY_LoggerNUtils"  PREFIX "") # OutPut File name
 
 # --------fmt---------
-                                         #  inptu:- ${REY_Fetch_FMT_BASE_DIR]
-include(./.REY_Fetch_fmt.cmake)          # Output:- fmt::fmt
+                                       #  input:- ${REY_Fetch_FMT_BASE_DIR]
+include(./.REY_Fetch_fmt.cmake)        # Output:- fmt::fmt
 target_link_libraries      (REY_LoggerNUtils PUBLIC fmt::fmt)
 
 # -----bli-assert-----
