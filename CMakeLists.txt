@@ -36,10 +36,10 @@ project("REY_LoggerNUtils_PROJECT" VERSION 0.1)
 #                                   target_include_directories(idk PUBLIC fmt::fmt)
 #
 #  INPUT Options:-
-set(REY_Fetch_FMT_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.forge)      # "Where should I Fetch Stuffs? ---> .forge [|see README.md for .forge info]"
-set(REY_Build_INSTALL_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/.install)    # "Where should I Install libs & includes? ---> .install"
+set(REY_FETCH_FMT_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.forge)      # "Where should I Fetch Stuffs? ---> .forge [|see README.md for .forge info]"
+set(REY_BUILD_INSTALL_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/.install)    # "Where should I Install libs & includes? ---> .install"
 #        |- fmt uses these:-
-set(CMAKE_INSTALL_PREFIX ${REY_Build_INSTALL_DIR}            CACHE PATH "" FORCE)
+set(CMAKE_INSTALL_PREFIX ${REY_BUILD_INSTALL_DIR}            CACHE PATH "" FORCE)
 set(CMAKE_INSTALL_LIBDIR ${CMAKE_INSTALL_PREFIX}/extern-libs CACHE PATH "" FORCE)
 # [If you change above stuffs]:- Clean ENTIRE .forge directory. RERUN:- CONFIGURATION, BUILD, INSTALL
 # --------------------    
@@ -61,8 +61,8 @@ target_include_directories (REY_LoggerNUtils PUBLIC ${INC})
 set_target_properties      (REY_LoggerNUtils  PROPERTIES  OUTPUT_NAME "lib-REY_LoggerNUtils"  PREFIX "") # OutPut File name
 
 # --------fmt---------
-                                       #  input:- ${REY_Fetch_FMT_BASE_DIR]
-include(./.REY_Fetch_fmt.cmake)        # Output:- fmt::fmt
+                                         #  input:- ${REY_FETCH_FMT_BASE_DIR]
+include(${CMAKE_CURRENT_SOURCE_DIR}/.forge/CMakeFiles/REY_FetchV2_fmt.cmake)  # Output:- fmt::fmt
 target_link_libraries      (REY_LoggerNUtils PUBLIC fmt::fmt)
 
 # -----bli-assert-----

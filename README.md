@@ -1,6 +1,7 @@
 # REY_LoggerNUtils `V0.2`
 - `V0.3`:- WIP
     - `.install`:- it's a Folder for `lib-REY_LoggerNUtils.lib` & "external libraries" installation
+    - added `.forge/CMakeFiles/REY_FetchV2_fmt.cmake`
 - `V0.2`:- Prefix_Tag:- 😢 REFACTORED ["amVK" --> "REY"]
 - `V0.1`:- Initial Commit: moving from [GIST ---> GITHUB]
 - `V0.1beta`:- https://gist.github.com/REYNEP/14a628ab270cae461a926ba212226492

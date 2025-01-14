@@ -1,6 +1,6 @@
 # --------------------
 #  INPUT Options:- 
-#       ${REY_Fetch_FMT_BASE_DIR} ---> Stuff will be fetched into this DIR
+#       ${REY_FETCH_FMT_BASE_DIR} ---> Stuff will be fetched into this DIR
 # OUTPUT Options:- 
 #       ${fmt::fmt} ---------> this is a "Target"
 #                              this is How you use it:-
@@ -14,7 +14,7 @@
     endif()
 # --------------------
 include(FetchContent)
-set(FETCHCONTENT_BASE_DIR ${REY_Fetch_FMT_BASE_DIR})
+set(FETCHCONTENT_BASE_DIR ${REY_FETCH_FMT_BASE_DIR})
 set(FETCHCONTENT_QUIET TRUE)        # Doesn't have any effect on "GIT_PROGRESS" / "LOG_DOWNLOAD"
 
     FetchContent_Declare(
@@ -23,7 +23,7 @@ set(FETCHCONTENT_QUIET TRUE)        # Doesn't have any effect on "GIT_PROGRESS" 
         GIT_TAG        e3ddede6c4ee818825c4e5a6dfa1d384860c27d9     # "fmt" Version:- 11.1.1
         GIT_PROGRESS   TRUE         # ON:- logs DOWNLOAD_PROGRESS into `LOG_DIR`
 
-        LOG_DIR      ${REY_Fetch_FMT_BASE_DIR}
+        LOG_DIR      ${REY_FETCH_FMT_BASE_DIR}
         LOG_DOWNLOAD   TRUE
         LOG_UPDATE     TRUE
         LOG_PATCH      TRUE
