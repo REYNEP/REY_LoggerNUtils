@@ -21,6 +21,13 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
     set(Git_Name fmt
         # git clone <link> ----> auto creates a Directory. This variable should store that name
     )
+    set(Git_SubModule
+        # ${CMAKE_CURRENT_SOURCE_DIR}/${Git_Name}
+        # Should be a FULL PATH
+            # We will assume that this path ---> Exists
+            # If this is not EMPTY-STRINGS ----> THIS WILL BE USED
+            #                              |---> ${REY_FETCH_${TN}_BASE_DIR} won't be used
+    )
     set(Git_CheckFiles
         ${Git_Name}/CMakeLists.txt
         ${Git_Name}/src/fmt.cc
@@ -37,6 +44,7 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
     )
     set(Header_Name fmt/core.h)
     set(Target_Name
+        # You should set this to what the author ORIGINALLY let the TARGET NAME be inside "${Git_Link}/CMakeLists.txt"
         # REY_LoggerNUtils
         # REY_LoggerNUtils --> will prolly output 'libREY_LoggerNUtils.lib'
         # ex1
@@ -45,8 +53,12 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
     )
 # --------------------
 #  INPUT Options:-
-#       ${REY_SCOUT_${TN}_PATHS}    ---> We won't fetch unless this is EMPTY-STRING/NOT-DEFINED
-#       ${REY_FETCH_${TN}_BASE_DIR} ---> Stuff will be fetched into this DIR
+#       All the things above & below before Pseudocode
+#     Variations:-
+#       1. REY_SCOUT_${TN}_PATHS -------> Trying to Find    [if]
+#       2. Git_SubModule ---------------> Git SubModule     [elseif]
+#       3. REY_FETCH_${TN}_BASE_DIR ----> Git Clone         [else]
+#
 # OUTPUT Options:- 
 #       ${REY_FOUND_${TN}_LIBRARY}  ---> CACHED String to where ${Binary_Names} is located
 #       ${REY_FOUND_${TN}_INCLUDE}  ---> CACHED String to where ${Header_Name}  is located
@@ -76,6 +88,7 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
     if(  (NOT DEFINED REY_FETCH_${TN}_BASE_DIR)   OR   (${REY_FETCH_${TN}_BASE_DIR} STREQUAL "")  )
 
         set(REY_FETCH_${TN}_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.forge)
+            # Won't be USED if ${Git_SubModule} is defined & non-empty string
     endif()
         set(REY_SCOUT_${TN}_PATHS)
 # --------------------
@@ -83,23 +96,27 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # All the Variables above.... You are supposed to modify as per different Libraries
 # Pseudocode for this file
 # --------------------
-# if (REY_SCOUT_${TN}_PATHS != "")
-    # find_library(${Binary_Names})
-    # find_path(${TN}/${Header_Name})
-    # USE:- REY_SCOUT_${TN}_PATHS
-    # Check FOUND / LOG FATAL ERROR
-# else()
-    # if(NOT EXISTS ${REY_FETCH_${TN}_BASE_DIR}/${Git_Name} )
-        # git clone ${Git_Link}
-        # add_subdirectory(${Git_Name})
+    # if (REY_SCOUT_${TN}_PATHS != "")
+        # find_library(${Binary_Names})
+        # find_path(${TN}/${Header_Name})
+        # USE:- REY_SCOUT_${TN}_PATHS
+        # Check FOUND / LOG FATAL ERROR
+        
+    # elseif(  (DEFINED Git_SubModule)   AND   (${Git_SubModule} NOT STREQUAL "")  )
+        # git submodule init / update
+            
     # else()
-        # if(NOT EXISTS ${Git_CheckFiles})
-            # LOG FATAL ERROR
-        # else()
+        # if(NOT EXISTS ${REY_FETCH_${TN}_BASE_DIR}/${Git_Name} )
+            # git clone ${Git_Link}
             # add_subdirectory(${Git_Name})
+        # else()
+            # if(NOT EXISTS ${Git_CheckFiles})
+                # LOG FATAL ERROR
+            # else()
+                # add_subdirectory(${Git_Name})
+            # endif()
         # endif()
     # endif()
-# endif()
 # --------------------
 
 
@@ -226,6 +243,21 @@ if (  (DEFINED REY_SCOUT_${TN}_PATHS)   AND   (${REY_SCOUT_${TN}_PATHS} NOT STRE
                                 Please Undefine it or make it EMPTY-STRING, if you want us to automatically `git clone ${Git_Link}`")
         endif()
     # =============================== if BOTH ARE FOUND =================================
+elseif(  (DEFINED Git_SubModule)   AND   (${Git_SubModule} NOT STREQUAL "")  )
+
+        message(STATUS "UPDATING SUBMODULE ${REY_FETCH_${TN}_BASE_DIR}/${Git_Name}")
+        message(STATUS "Download Progress logged inside ${REY_FETCH_${TN}_BASE_DIR}/${TN}_Download_stdout.log ")
+    execute_process(
+        COMMAND             git submodule init
+        COMMAND             git submodule update
+        WORKING_DIRECTORY ${Git_SubModule}
+
+        TIMEOUT 10              # seconds
+        COMMAND_ECHO STDOUT     # output's the part after "COMMAND" few lines above
+    )
+        message(STATUS "Updating Done")
+
+        add_subdirectory(${Git_SubModule})    #Output:- ${Target_Name}
 else()
 
 

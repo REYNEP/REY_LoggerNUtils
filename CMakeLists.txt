@@ -14,8 +14,8 @@ RANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFR
 T HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #                           *************** END Boost Software License BLOCK ***************                          ]]
+#                   *************** The Original Code is Copyright (C) 2025, REYNEP ***************                   ]]
 
-# # The Original Code is Copyright (C) 2025, REYNEP
 
 cmake_minimum_required(VERSION 3.25 FATAL_ERROR)
 
@@ -23,6 +23,39 @@ project("REY_LoggerNUtils_PROJECT" VERSION 0.1)
 
     set(CMAKE_CXX_STANDARD 23)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# --------------------
+    set(SRC
+        "REY_Logger.cpp"
+    )
+
+    set(INC
+        ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+# --------------------
+
+# --------------------
+add_library                (REY_LoggerNUtils ${SRC})
+target_include_directories (REY_LoggerNUtils PUBLIC ${INC})
+set_target_properties      (REY_LoggerNUtils  PROPERTIES  OUTPUT_NAME "lib-REY_LoggerNUtils"  PREFIX "")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # -------------------- Also Should be @ README.md
 # OUTPUT Options:- 
@@ -36,54 +69,56 @@ project("REY_LoggerNUtils_PROJECT" VERSION 0.1)
 #                                   target_include_directories(idk PUBLIC fmt::fmt)
 #
 #  INPUT Options:-
-set(REY_FETCH_fmt_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.forge)      # "Where should I Fetch Stuffs? ---> .forge [|see README.md for .forge info]"
-set(REY_BUILD_INSTALL_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/.install)    # "Where should I Install libs & includes? ---> .install"
+    set(REY_FETCH_fmt_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.forge)      # "Where should I Fetch Stuffs? ---> .forge [|see README.md for .forge info]"
+    set(REY_BUILD_INSTALL_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/.install)    # "Where should I Install libs & includes? ---> .install"
 #        |- fmt uses these:-
-set(CMAKE_INSTALL_PREFIX ${REY_BUILD_INSTALL_DIR}            CACHE PATH "" FORCE)
-set(CMAKE_INSTALL_LIBDIR ${CMAKE_INSTALL_PREFIX}/extern-libs CACHE PATH "" FORCE)
+    set(CMAKE_INSTALL_PREFIX ${REY_BUILD_INSTALL_DIR}            CACHE PATH "" FORCE)
+    set(CMAKE_INSTALL_LIBDIR ${CMAKE_INSTALL_PREFIX}/extern-libs CACHE PATH "" FORCE)
 # [If you change above stuffs]:- Clean ENTIRE .forge directory. RERUN:- CONFIGURATION, BUILD, INSTALL
 # --------------------    
 
 
 
-set(SRC
-    "REY_Logger.cpp"
-)
-  
-set(INC
-    ${CMAKE_CURRENT_SOURCE_DIR}
-)
 
 
-# --------------------
-               add_library (REY_LoggerNUtils ${SRC})
-target_include_directories (REY_LoggerNUtils PUBLIC ${INC})
-set_target_properties      (REY_LoggerNUtils  PROPERTIES  OUTPUT_NAME "lib-REY_LoggerNUtils"  PREFIX "") # OutPut File name
+
+
+
+
+
+
+
+
+
+
+
+
 
 # --------fmt---------
-                                         #  input:- ${REY_FETCH_FMT_BASE_DIR]
-include(${CMAKE_CURRENT_SOURCE_DIR}/.forge/CMakeFiles/REY_FetchV3_fmt.cmake)  # Output:- fmt::fmt
-target_link_libraries      (REY_LoggerNUtils PUBLIC fmt::fmt)
+    #                                           input:- ${REY_FETCH_FMT_BASE_DIR]
+    include(${CMAKE_CURRENT_SOURCE_DIR}/.forge/CMakeFiles/REY_FetchV3_fmt.cmake)  # Output:- fmt::fmt
+    target_link_libraries  (REY_LoggerNUtils PUBLIC fmt::fmt)
 
 # -----bli-assert-----
-if(WIN32)                                                       # for Windows operating system in general
-    target_link_libraries  (REY_LoggerNUtils PUBLIC Dbghelp.lib Version.lib Shlwapi.lib)
-elseif(MSVC OR MSYS OR MINGW)                                   # for detecting Windows compilers
-    target_link_libraries  (REY_LoggerNUtils PUBLIC Dbghelp.lib Version.lib Shlwapi.lib)
-elseif(APPLE)                                                   # for MacOS X or iOS, watchOS, tvOS (since 3.10.3)
-    target_link_libraries  (REY_LoggerNUtils PUBLIC execinfo)
-elseif(UNIX AND NOT APPLE)                                      # for Linux, BSD, Solaris, Minix
-    target_link_libraries  (REY_LoggerNUtils PUBLIC execinfo)
-endif()
-# From:- https://stackoverflow.com/a/40152725
+    if(WIN32)                                                       # for Windows operating system in general
+        target_link_libraries  (REY_LoggerNUtils PUBLIC Dbghelp.lib Version.lib Shlwapi.lib)
+    elseif(MSVC OR MSYS OR MINGW)                                   # for detecting Windows compilers
+        target_link_libraries  (REY_LoggerNUtils PUBLIC Dbghelp.lib Version.lib Shlwapi.lib)
+    elseif(APPLE)                                                   # for MacOS X or iOS, watchOS, tvOS (since 3.10.3)
+        target_link_libraries  (REY_LoggerNUtils PUBLIC execinfo)
+    elseif(UNIX AND NOT APPLE)                                      # for Linux, BSD, Solaris, Minix
+        target_link_libraries  (REY_LoggerNUtils PUBLIC execinfo)
+    endif()
+    # From:- https://stackoverflow.com/a/40152725
 
 # ------install-------
-install(TARGETS REY_LoggerNUtils
-  DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/.install)
+    install(TARGETS REY_LoggerNUtils
+        DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/.install)
 
 # Install header files
-install(FILES 
-  ${CMAKE_CURRENT_SOURCE_DIR}/REY_Logger.hh
-  ${CMAKE_CURRENT_SOURCE_DIR}/REY_LoggerEXT.hh
-  ${CMAKE_CURRENT_SOURCE_DIR}/REY_Utils.hh
-  DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/.install/include/REY_LoggerNUtils)
+    install(FILES 
+        ${CMAKE_CURRENT_SOURCE_DIR}/REY_Logger.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/REY_LoggerEXT.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/REY_Utils.hh
+        DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/.install/include/REY_LoggerNUtils)
+
