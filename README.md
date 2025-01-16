@@ -62,8 +62,10 @@ git add submoule https://github.com/REYNEP/REY_LoggerNUtils <path>
 #              Usage:- target_link_libraries(<target_name> REY_LoggerNUtils)
 #
 # Possible Untested Output Options:- [Might Not Work, cz of SCOPE Limitations]
-#       fmt::fmt -----> target_link_libraries(REY_LoggerNUtils PUBLIC fmt::fmt)
-#                       Thats what we did
+#       ${fmt::fmt} ---------> this is a "Target"
+#                              this is How you use it:-
+#                                   target_link_libraries(idk fmt::fmt)
+#                                   target_include_directories(idk PUBLIC fmt::fmt)
 # --------------------
 ```
 

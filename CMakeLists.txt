@@ -39,66 +39,10 @@ add_library                (REY_LoggerNUtils ${SRC})
 target_include_directories (REY_LoggerNUtils PUBLIC ${INC})
 set_target_properties      (REY_LoggerNUtils  PROPERTIES  OUTPUT_NAME "lib-REY_LoggerNUtils"  PREFIX "")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# -------------------- Also Should be @ README.md
-# OUTPUT Options:- 
-#       Library Name:- REY_LoggerNUtils
-#              Usage:- target_link_libraries(<target_name> REY_LoggerNUtils)
-#
-# Possible Untested Output Options:- [Might Not Work, cz of SCOPE Limitations]
-#       ${fmt::fmt} ---------> this is a "Target"
-#                              this is How you use it:-
-#                                   target_link_libraries(idk fmt::fmt)
-#                                   target_include_directories(idk PUBLIC fmt::fmt)
-#
-#  INPUT Options:-
-    set(REY_FETCH_fmt_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.forge)      # "Where should I Fetch Stuffs? ---> .forge [|see README.md for .forge info]"
-    set(REY_BUILD_INSTALL_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/.install)    # "Where should I Install libs & includes? ---> .install"
-#        |- fmt uses these:-
-    set(CMAKE_INSTALL_PREFIX ${REY_BUILD_INSTALL_DIR}            CACHE PATH "" FORCE)
-    set(CMAKE_INSTALL_LIBDIR ${CMAKE_INSTALL_PREFIX}/extern-libs CACHE PATH "" FORCE)
-# [If you change above stuffs]:- Clean ENTIRE .forge directory. RERUN:- CONFIGURATION, BUILD, INSTALL
-# --------------------    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # --------fmt---------
     #                                           input:- ${REY_FETCH_FMT_BASE_DIR]
     include(${CMAKE_CURRENT_SOURCE_DIR}/.forge/CMakeFiles/REY_FetchV4.fmt.cmake)  # Output:- fmt::fmt
     target_link_libraries  (REY_LoggerNUtils PUBLIC fmt::fmt)
-    message(STATUS "GIT LINK:- ${Git_Link}")
 
 # -----bli-assert-----
     if(WIN32)                                                       # for Windows operating system in general
@@ -115,6 +59,7 @@ set_target_properties      (REY_LoggerNUtils  PROPERTIES  OUTPUT_NAME "lib-REY_L
 # ------install-------
     install(TARGETS REY_LoggerNUtils
         DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/.install)
+        # Same Destination is used for installing "fmt::fmt" --> Check: `REY_FetchV4.fmt.cmake`
 
 # Install header files
     install(FILES 
