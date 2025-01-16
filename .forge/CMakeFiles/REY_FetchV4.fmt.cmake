@@ -10,3 +10,4 @@ if(  (DEFINED REY_FetchV4_MODS_PATH)   AND   (${REY_FetchV4_MODS_PATH} NOT STREQ
 endif()
 
 include(${CMAKE_CURRENT_LIST_DIR}/REY_FetchV4.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/REY_FetchV4_X_Reset.cmake)

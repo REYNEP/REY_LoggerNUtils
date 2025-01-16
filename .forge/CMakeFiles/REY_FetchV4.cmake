@@ -188,6 +188,7 @@ else()
             execute_process(
                 #COMMAND powershell -Command "Start-Process git -ArgumentList 'clone https://github.com/fmtlib/fmt' 
                 #                   -NoNewWindow -RedirectStandardOutput hoga.txt -RedirectStandardError hoga.txt -Wait"
+                # https://www.baeldung.com/linux/git-clone-redirect-output-file
                 #COMMAND cmd /c "git clone --progress ${Git_Link} > ${TN}_Download.log 2>&1"
                  COMMAND         git clone --progress ${Git_Link}
 

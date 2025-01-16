@@ -98,6 +98,7 @@ set_target_properties      (REY_LoggerNUtils  PROPERTIES  OUTPUT_NAME "lib-REY_L
     #                                           input:- ${REY_FETCH_FMT_BASE_DIR]
     include(${CMAKE_CURRENT_SOURCE_DIR}/.forge/CMakeFiles/REY_FetchV4.fmt.cmake)  # Output:- fmt::fmt
     target_link_libraries  (REY_LoggerNUtils PUBLIC fmt::fmt)
+    message(STATUS "GIT LINK:- ${Git_Link}")
 
 # -----bli-assert-----
     if(WIN32)                                                       # for Windows operating system in general
