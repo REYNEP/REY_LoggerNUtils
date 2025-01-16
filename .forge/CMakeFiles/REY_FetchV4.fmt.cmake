@@ -15,4 +15,4 @@ endif()
     # [If you change above stuffs]:- RERUN:- FRESH CONFIGURATION, BUILD, INSTALL
 
 include(${CMAKE_CURRENT_LIST_DIR}/REY_FetchV4.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/REY_FetchV4_X_Reset.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/REY_FetchV4_X_RESET.cmake)

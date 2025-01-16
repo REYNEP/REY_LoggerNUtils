@@ -84,7 +84,7 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
             # REY_FOUND_${TN}_LIBRARY ---> CACHED String to where ${Binary_Names} is located
             # REY_FOUND_${TN}_INCLUDE ---> CACHED String to where ${Header_Name}  is located
     )
-    if(  (NOT DEFINED REY_FETCH_${TN}_BASE_DIR)   OR   (${REY_FETCH_${TN}_BASE_DIR} STREQUAL "")  )
+    if(  (NOT DEFINED REY_FETCH_${TN}_BASE_DIR)   OR   ("${REY_FETCH_${TN}_BASE_DIR}" STREQUAL "")  )
 
         set(REY_FETCH_${TN}_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.forge)
             # Won't be USED if ${Git_SubModule} is defined & non-empty string
@@ -101,7 +101,7 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
         # USE:- REY_SCOUT_${TN}_PATHS
         # Check FOUND / LOG FATAL ERROR
         
-    # elseif(  (DEFINED Git_SubModule)   AND   (${Git_SubModule} NOT STREQUAL "")  )
+    # elseif(  (DEFINED Git_SubModule)   AND   (NOT "${Git_SubModule}" STREQUAL "")  )
         # git submodule init / update
             
     # else()
@@ -152,7 +152,7 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
         set(CMAKE_BUILD_TYPE Debug)
     endif()
 # --------------------
-if (  (DEFINED REY_SCOUT_${TN}_PATHS)   AND   (${REY_SCOUT_${TN}_PATHS} NOT STREQUAL "")  )
+if (  (DEFINED REY_SCOUT_${TN}_PATHS)   AND   (NOT "${REY_SCOUT_${TN}_PATHS}" STREQUAL "")  )
     # ================================ FINDING ${Binary_Names} =================================
         find_library(tmp_scout_${TN}_lib
             NAMES
@@ -245,7 +245,7 @@ if (  (DEFINED REY_SCOUT_${TN}_PATHS)   AND   (${REY_SCOUT_${TN}_PATHS} NOT STRE
 
 
 
-elseif(  (DEFINED Git_SubModule)   AND   (${Git_SubModule} NOT STREQUAL "")  )
+elseif(  (DEFINED Git_SubModule)   AND   (NOT "${Git_SubModule}" STREQUAL "")  )
 
 
         message(STATUS "UPDATING SUBMODULE ${REY_FETCH_${TN}_BASE_DIR}/${Git_Name}")
