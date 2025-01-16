@@ -84,7 +84,6 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
             # REY_FOUND_${TN}_LIBRARY ---> CACHED String to where ${Binary_Names} is located
             # REY_FOUND_${TN}_INCLUDE ---> CACHED String to where ${Header_Name}  is located
     )
-        
     if(  (NOT DEFINED REY_FETCH_${TN}_BASE_DIR)   OR   (${REY_FETCH_${TN}_BASE_DIR} STREQUAL "")  )
 
         set(REY_FETCH_${TN}_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.forge)
@@ -243,7 +242,11 @@ if (  (DEFINED REY_SCOUT_${TN}_PATHS)   AND   (${REY_SCOUT_${TN}_PATHS} NOT STRE
                                 Please Undefine it or make it EMPTY-STRING, if you want us to automatically `git clone ${Git_Link}`")
         endif()
     # =============================== if BOTH ARE FOUND =================================
+
+
+
 elseif(  (DEFINED Git_SubModule)   AND   (${Git_SubModule} NOT STREQUAL "")  )
+
 
         message(STATUS "UPDATING SUBMODULE ${REY_FETCH_${TN}_BASE_DIR}/${Git_Name}")
         message(STATUS "Download Progress logged inside ${REY_FETCH_${TN}_BASE_DIR}/${TN}_Download_stdout.log ")
@@ -258,6 +261,8 @@ elseif(  (DEFINED Git_SubModule)   AND   (${Git_SubModule} NOT STREQUAL "")  )
         message(STATUS "Updating Done")
 
         add_subdirectory(${Git_SubModule})    #Output:- ${Target_Name}
+
+
 else()
 
 
@@ -267,10 +272,10 @@ else()
         message(STATUS "Download Progress logged inside ${REY_FETCH_${TN}_BASE_DIR}/${TN}_Download_stdout.log ")
 
             execute_process(
-                #COMMAND cmd /c "git clone ${Git_Link} > ${TN}_Download.log 2>&1"
-                COMMAND          git clone ${Git_Link}
+                #COMMAND cmd /c "git clone --progress ${Git_Link} > ${TN}_Download.log 2>&1"
+                COMMAND          git clone --progress ${Git_Link}
 
-                #COMMAND        "git clone https://github.com/fmtlib/fmt"
+                #COMMAND        "git clone --progress https://github.com/fmtlib/fmt"
                 # With Quotation marks, it doesn't redirect stdout to OUTPUT_FILE/VARIABLE
 
                 WORKING_DIRECTORY ${REY_FETCH_${TN}_BASE_DIR}

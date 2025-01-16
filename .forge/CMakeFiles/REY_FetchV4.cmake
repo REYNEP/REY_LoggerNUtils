@@ -17,85 +17,21 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 #                   *************** The Original Code is Copyright (C) 2025, REYNEP ***************                   ]]
 #      *************** This File will be maintained @ https://github.com/REYNEP/REY_LoggerNUtils ***************      ]]
 
-# --------------------
-    set(Git_Link "https://github.com/REYNEP/REY_LoggerNUtils")
-    set(Git_Name REY_LoggerNUtils
-        # git clone <link> ----> auto creates a Directory. This variable should store that name
-    )
-    set(Git_SubModule
-        # ${CMAKE_CURRENT_SOURCE_DIR}/${Git_Name}
-        # Should be a FULL PATH
-            # We will assume that this path ---> Exists
-            # If this is not EMPTY-STRINGS ----> THIS WILL BE USED
-            #                              |---> ${REY_FETCH_${TN}_BASE_DIR} won't be used
-    )
-    set(Git_CheckFiles
-        ${Git_Name}/CMakeLists.txt
-        ${Git_Name}/REY_Logger.hh
-        ${Git_Name}/REY_Logger.cpp
 
-      # ${Git_Name}/src/fmt.cc
-      # ${Git_Name} folder itself is inside ${REY_FETCH_${TN}_BASE_DIR} --> We will handle that part
-    )
-    set(Binary_Names
-        REY_LoggerNUtils.lib
-        #    fmtd      # UNIX/MAC
-        #    fmt       # Windows
-        # *Possible Binary Names/Hints --> Our job is to find any one of these possibilities
-    )
-    set(Header_Name REY_Logger.hh)
-    set(Target_Name
-        REY_LoggerNUtils
-        # You should set this to what the author ORIGINALLY let the TARGET NAME be inside "${Git_Link}/CMakeLists.txt"
-        # REY_LoggerNUtils --> will prolly output 'libREY_LoggerNUtils.lib'
-        # ex1
-        #  fmt::fmt
-        #  fmt::fmt it's a name that "fmt" authors decided to go by
-    )
-# --------------------
-#  INPUT Options:-
-#       All the things above & below before Pseudocode
-#     Variations:-
-#       1. REY_SCOUT_${TN}_PATHS -------> Trying to Find    [if]
-#       2. Git_SubModule ---------------> Git SubModule     [elseif]
-#       3. REY_FETCH_${TN}_BASE_DIR ----> Git Clone         [else]
-#
-# OUTPUT Options:- 
-#       ${REY_FOUND_${TN}_LIBRARY}  ---> CACHED String to where ${Binary_Names} is located
-#       ${REY_FOUND_${TN}_INCLUDE}  ---> CACHED String to where ${Header_Name}  is located
-#       ${lib_${TN}} 
-#   e.g.  lib_REY_${TN} ---------> this is a "Target"
-#                              this is How you use it:-
-#                                   target_link_libraries(idk lib_${TN})
-#                                   target_include_directories(idk PUBLIC lib_${TN})
-# --------------------
-    set(Tool_Name 
-        REY_LoggerNUtils
-        # Tool_Name = CMAKE Variables will be created based on this. List of variables below inside set(TN)
-        # Tool = "External Library" but i really don't like calling SMALL Stuffs "Library" yk
-            # cz Libraries are supposed to be really BIG & full of many different Books
-    )
-    set(TN ${Tool_Name}
-        # This file shall use this ABBREVIATION
-        # Please don't confuse this with "Target_Name"
-        # TN = Tool_Name
-        # List of Variables Created [all shall be here]
-            # REY_SCOUT_${TN}_PATHS   ---> Basically where to "Find" yk
-            # REY_FETCH_${TN}_BASE_DIR
-            # REY_FOUND_${TN}_LIBRARY ---> CACHED String to where ${Binary_Names} is located
-            # REY_FOUND_${TN}_INCLUDE ---> CACHED String to where ${Header_Name}  is located
-    )
-    if(  (NOT DEFINED REY_FETCH_${TN}_BASE_DIR)   OR   (${REY_FETCH_${TN}_BASE_DIR} STREQUAL "")  )
+# Lots of Variables need to be SET before calling on this File
+# So it's best to have files like "REY_FetchV4_fmt.cmake"
+# IDEA IS:-
+#       "REY_FetchV4.fmt.cmake" calls ----> "REY_FetchV4_X.fmt.cmake" [SET Variables]
+#       "REY_FetchV4.fmt.cmake" calls ----> "REY_FetchV4.cmake" [This File]
 
-        set(REY_FETCH_${TN}_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.forge)
-            # Won't be USED if ${Git_SubModule} is defined & non-empty string
-    endif()
-        set(REY_SCOUT_${TN}_PATHS)
-# --------------------
 
-# All the Variables above.... You are supposed to modify as per different Libraries
+
+
+
+
+
 # Pseudocode for this file
-# --------------------
+# ----------------------------------------
     # if (REY_SCOUT_${TN}_PATHS != "")
         # find_library(${Binary_Names})
         # find_path(${TN}/${Header_Name})
@@ -117,30 +53,7 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
             # endif()
         # endif()
     # endif()
-# --------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# ----------------------------------------
 
 
 
@@ -273,25 +186,32 @@ else()
         message(STATUS "Download Progress logged inside ${REY_FETCH_${TN}_BASE_DIR}/${TN}_Download_stdout.log ")
 
             execute_process(
+                #COMMAND powershell -Command "Start-Process git -ArgumentList 'clone https://github.com/fmtlib/fmt' 
+                #                   -NoNewWindow -RedirectStandardOutput hoga.txt -RedirectStandardError hoga.txt -Wait"
                 #COMMAND cmd /c "git clone --progress ${Git_Link} > ${TN}_Download.log 2>&1"
-                COMMAND          git clone --progress ${Git_Link}
+                 COMMAND         git clone --progress ${Git_Link}
 
-                #COMMAND        "git clone --progress https://github.com/fmtlib/fmt"
+                #COMMAND        "git clone https://github.com/fmtlib/fmt"
                 # With Quotation marks, it doesn't redirect stdout to OUTPUT_FILE/VARIABLE
 
                 WORKING_DIRECTORY ${REY_FETCH_${TN}_BASE_DIR}
 
-                OUTPUT_VARIABLE tmp_stdout               ERROR_VARIABLE tmp_stdout
-                # OUTPUT_FILE     fmt_Download_stdout.log  ERROR_FILE     fmt_Download_stdout.log
+                # OUTPUT_VARIABLE tmp_stdout               ERROR_VARIABLE tmp_stdout
+                  OUTPUT_FILE     fmt_Download_stdout.log  ERROR_FILE     fmt_Download_stdout.log   
                 # Both doesn't work @ the same time
+
+                RESULT_VARIABLE result_code
 
                 TIMEOUT 10              # seconds
                 COMMAND_ECHO STDOUT     # output's the part after "COMMAND" few lines above
             )
 
-        file(WRITE "${REY_FETCH_${TN}_BASE_DIR}/${TN}_Download_stdout.log" "${tmp_stdout}\n")
-        message(STATUS "tmp_stdout:- ${tmp_stdout}")
-        message(STATUS "Fetching Done")
+        if (result_code NOT EQUAL 0)
+            message(FATAL_ERROR "git clone ${Git_Link} failed.... check ${REY_FETCH_${TN}_BASE_DIR}/fmt_Download_stdout.log")
+        endif()
+        #file(READ "${REY_FETCH_${TN}_BASE_DIR}/${TN}_Download_stdout.log" tmp_stdout)
+        #message(STATUS "tmp_stdout:- ${tmp_stdout}")
+         message(STATUS "Fetching Done")
 
 
         add_subdirectory(${REY_FETCH_${TN}_BASE_DIR}/${Git_Name})    #Output:- ${Target_Name}

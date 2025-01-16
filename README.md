@@ -1,6 +1,6 @@
 # REY_LoggerNUtils `V0.3`
 - `V0.4`:- WIP
-    - "Nothing Yet"
+    - `REY_FetchV4`
 - `V0.3`:- DONE
     - `.install`:- it's a Folder for `lib-REY_LoggerNUtils.lib` & "external libraries" installation
     - added `.forge/CMakeFiles/REY_FetchV2_fmt.cmake`
