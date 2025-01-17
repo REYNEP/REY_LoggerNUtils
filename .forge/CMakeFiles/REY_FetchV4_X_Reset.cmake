@@ -1,19 +1,19 @@
 # --------------------
     set(Git_Link)
-    set(Git_Name)
-        # git clone <link> ----> auto creates a Directory. This variable should store that name
-    
+    set(Git_CloneDir_Name)
+
+
     set(Git_SubModule)
-        # ex:- ${CMAKE_CURRENT_SOURCE_DIR}/${Git_Name}
+        # ex:- ${CMAKE_CURRENT_SOURCE_DIR}/${Git_CloneDir_Name}
         # Should be a FULL PATH
             # We will assume that this path ---> Exists
-            # If this is not EMPTY-STRINGS ----> THIS WILL BE USED
+            # If this is not  EMPTY-STRINGS ---> THIS WILL BE USED
             #                              |---> ${REY_FETCH_${TN}_BASE_DIR} won't be used
 
     set(Git_CheckFiles)
-        # ${Git_Name}/REY_Logger.cpp
-        # ${Git_Name}/src/fmt.cc
-        # ${Git_Name} folder itself is inside ${REY_FETCH_${TN}_BASE_DIR} --> We will handle that part
+        # ${Git_CloneDir_Name} folder itself is inside ${REY_FETCH_${TN}_BASE_DIR} --> We will handle that part
+
+
 
 
 
@@ -24,7 +24,7 @@
         #   fmt       # Windows
         # *Possible Binary Names/Hints --> Our job is to find any one of these possibilities
 
-    set(Header_Name)
+    set(Header_Name)  # fmt/core.h
     set(Target_Name)
         # You should set this to what the author ORIGINALLY let the TARGET NAME be inside "${Git_Link}/CMakeLists.txt"
         # REY_LoggerNUtils

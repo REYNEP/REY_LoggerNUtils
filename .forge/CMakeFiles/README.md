@@ -1,3 +1,21 @@
+## V4
+1. `REY_FetchV4.cmake`:- THE SOFTWARE
+2. `REY_FetchV4_X.<lib-name>.cmake`:- "X" = variables 😃
+3. `REY_FetchV4_X_RESET.cmake`:- RESET ---> EMPTY-STRINGs
+4. `REY_FetchV4.<lib-name>.cmake`:- INTERFACE = Includes and Patches/Joins/Connets Together 😄
+5. `REY_FetchV4_MOD.<lib-name>.cmake`:- Modifying Variables 😊
+
+
+## V4
+1. `REY_FetchV4.cmake`:- The Goddamn Main file, where all the work happens
+2. `REY_FetchV4_X.<lib-name>.cmake`:- "X" = variables 😃
+3. `REY_FetchV4_MOD.<lib-name>.cmake`:- imagine B uses A. C uses B. C also directly uses A. C wants to control how B fetches A. 
+    - C should have a copy of this file & SET `REY_FetchV4_MODS_PATH`
+4. `REY_FetchV4.<lib-name>.cmake`:- includes the above two thingies
+    - Here in These files ---> We can do Library Specific Extra Stuffs
+5. `REY_FetchV4_X_Reset.cmake`:- RESETs the Variables back to EMPTY-STRING
+
+
 ```cmake
 # Problem:- Authors that are gonna use "REY_LoggerNUtils" will need to modify variables inside ".forge/CMakeFiles/REY_FetchV3_fmt.cmake"
 #           But How can they? That file is inside REYNEP's "REY_LoggerNUtils" Repo.
@@ -23,15 +41,3 @@
 # 1. Having multiple copies of ".forge/CMakeFiles/REY_FetchV3_fmt.cmake" felt dumb
 # 2. 
 ```
-
-
-
-
-## V4
-1. `REY_FetchV4.cmake`:- The Goddamn Main file, where all the work happens
-2. `REY_FetchV4_X.<lib-name>.cmake`:- "X" = variables 😃
-3. `REY_FetchV4_MOD.<lib-name>.cmake`:- imagine B uses A. C uses B. C also directly uses A. C wants to control how B fetches A. 
-    - C should have a copy of this file & SET `REY_FetchV4_MODS_PATH`
-4. `REY_FetchV4.<lib-name>.cmake`:- includes the above two thingies
-    - Here in These files ---> We can do Library Specific Extra Stuffs
-5. `REY_FetchV4_X_Reset.cmake`:- RESETs the Variables back to EMPTY-STRING

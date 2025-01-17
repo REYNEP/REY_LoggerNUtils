@@ -1,9 +1,10 @@
 # --------------------
     set(Git_Link "https://github.com/fmtlib/fmt")
-    set(Git_CloneDir_Name fmt)
+    set(Git_CloneDir_Name fmt
         # git clone <link> ----> auto creates a Directory. This variable should store that name
+    )
     set(Git_SubModule
-        # ex1:- ${CMAKE_CURRENT_SOURCE_DIR}/${Git_CloneDir_Name}
+        # ex:- ${CMAKE_CURRENT_SOURCE_DIR}/${Git_CloneDir_Name}
         # Should be a FULL PATH
             # We will assume that this path ---> Exists
             # If this is not  EMPTY-STRINGS ---> THIS WILL BE USED

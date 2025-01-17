@@ -17,18 +17,12 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 #                   *************** The Original Code is Copyright (C) 2025, REYNEP ***************                   ]]
 #      *************** This File will be maintained @ https://github.com/REYNEP/REY_LoggerNUtils ***************      ]]
 
-
-# Lots of Variables need to be SET before calling on this File
-# So it's best to have files like "REY_FetchV4_fmt.cmake"
-# IDEA IS:-
-#       "REY_FetchV4.fmt.cmake" calls ----> "REY_FetchV4_X.fmt.cmake" [SET Variables]
+# --------------------
+#       "REY_FetchV4.fmt.cmake" calls ----> "REY_FetchV4_X.<lib-name>.cmake" [SET Variables]
+#       "REY_FetchV4.fmt.camke" calls ----> "REY.FetchV4_MOD.<lib-name>.cmake"
 #       "REY_FetchV4.fmt.cmake" calls ----> "REY_FetchV4.cmake" [This File]
-
-
-
-
-
-
+#       "REY_FetchV4.fmt.cmake" calls ----> "REY_FetchV4_X_RESET.cmake"    [RESET Variables]
+# --------------------
 
 # Pseudocode for this file
 # ----------------------------------------
@@ -42,14 +36,14 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
         # git submodule init / update
         
     # else()
-        # if(NOT EXISTS ${REY_FETCH_${TN}_BASE_DIR}/${Git_Name} )
+        # if(NOT EXISTS ${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name} )
             # git clone ${Git_Link}
-            # add_subdirectory(${Git_Name})
+            # add_subdirectory(${Git_CloneDir_Name})
         # else()
             # if(NOT EXISTS ${Git_CheckFiles})
                 # LOG FATAL ERROR
             # else()
-                # add_subdirectory(${Git_Name})
+                # add_subdirectory(${Git_CloneDir_Name})
             # endif()
         # endif()
     # endif()
@@ -162,7 +156,7 @@ if (  (DEFINED REY_SCOUT_${TN}_PATHS)   AND   (NOT "${REY_SCOUT_${TN}_PATHS}" ST
 elseif(  (DEFINED Git_SubModule)   AND   (NOT "${Git_SubModule}" STREQUAL "")  )
 
 
-        message(STATUS "UPDATING SUBMODULE ${REY_FETCH_${TN}_BASE_DIR}/${Git_Name}")
+        message(STATUS "UPDATING SUBMODULE ${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name}")
         message(STATUS "Download Progress logged inside ${REY_FETCH_${TN}_BASE_DIR}/${TN}_Download_stdout.log ")
     execute_process(
         COMMAND             git submodule init
@@ -181,7 +175,7 @@ else()
 
 
 
-    if( (NOT EXISTS ${REY_FETCH_${TN}_BASE_DIR}/${Git_Name}) )
+    if( (NOT EXISTS ${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name}) )
         message(STATUS "Fetching ${Git_Link}"   "inside ${REY_FETCH_${TN}_BASE_DIR}")
         message(STATUS "Download Progress logged inside ${REY_FETCH_${TN}_BASE_DIR}/${TN}_Download_stdout.log ")
 
@@ -189,8 +183,8 @@ else()
                 #COMMAND powershell -Command "Start-Process git -ArgumentList 'clone https://github.com/fmtlib/fmt' 
                 #                   -NoNewWindow -RedirectStandardOutput hoga.txt -RedirectStandardError hoga.txt -Wait"
                 # https://www.baeldung.com/linux/git-clone-redirect-output-file
-                #COMMAND cmd /c "git clone --progress ${Git_Link} > ${TN}_Download.log 2>&1"
-                 COMMAND         git clone --progress ${Git_Link}
+                #COMMAND cmd /c "git clone --progress ${Git_Link} ${Git_CloneDir_Name} > ${TN}_Download.log 2>&1"
+                 COMMAND         git clone --progress ${Git_Link} ${Git_CloneDir_Name}
 
                 #COMMAND        "git clone https://github.com/fmtlib/fmt"
                 # With Quotation marks, it doesn't redirect stdout to OUTPUT_FILE/VARIABLE
@@ -215,7 +209,7 @@ else()
          message(STATUS "Fetching Done")
 
 
-        add_subdirectory(${REY_FETCH_${TN}_BASE_DIR}/${Git_Name})    #Output:- ${Target_Name}
+        add_subdirectory(${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name})    #Output:- ${Target_Name}
     else()
         set(GitHub_FILES_isOK TRUE)
         foreach(file_x ${Git_CheckFiles})
@@ -224,17 +218,17 @@ else()
 
                 message(STATUS "[REY_FetchV3_${TN}]")
                 message(STATUS "     REY_FETCH_${TN}_BASE_DIR:- ${REY_FETCH_${TN}_BASE_DIR}")
-                message(STATUS "dA = REY_FETCH_${TN}_BASE_DIR/${Git_Name} ----> EXISTS")
+                message(STATUS "dA = REY_FETCH_${TN}_BASE_DIR/${Git_CloneDir_Name} ----> EXISTS")
                 message(STATUS "             Git_CheckFiles --> ${file_x} ----> DOESN't EXIST")
                 message(STATUS "                                     ")
                 message(STATUS "As Long as 'dA' exists ---> `git clone ${Git_Link}` won't work")
 
                 message(FATAL_ERROR "ERROR INFO Has been Logged above\n
-                                     ERROR:- REY_FETCH_${TN}_BASE_DIR/${Git_Name} exists, but it's not a proper GIT CLONE\n
+                                     ERROR:- REY_FETCH_${TN}_BASE_DIR/${Git_CloneDir_Name} exists, but it's not a proper GIT CLONE\n
                                      see .REY_FetchV3.cmake TOP Documentation part for INPUT-Settings/Variables")
             endif()
         endforeach()
-        add_subdirectory(${REY_FETCH_${TN}_BASE_DIR}/${Git_Name})    #Output:- ${Target_Name}
+        add_subdirectory(${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name})    #Output:- ${Target_Name}
     endif()
 
 

@@ -1,22 +1,22 @@
 # --------------------
     set(Git_Link "https://github.com/REYNEP/REY_LoggerNUtils")
-    set(Git_Name REY_LoggerNUtils
+    set(Git_CloneDir_Name REY_LoggerNUtils
         # git clone <link> ----> auto creates a Directory. This variable should store that name
     )
     set(Git_SubModule
-        # ${CMAKE_CURRENT_SOURCE_DIR}/${Git_Name}
+        # ex1:- ${CMAKE_CURRENT_SOURCE_DIR}/${Git_CloneDir_Name}
         # Should be a FULL PATH
             # We will assume that this path ---> Exists
-            # If this is not EMPTY-STRINGS ----> THIS WILL BE USED
+            # If this is not EMPTY-STRINGS  ---> THIS WILL BE USED
             #                              |---> ${REY_FETCH_${TN}_BASE_DIR} won't be used
     )
     set(Git_CheckFiles
-        ${Git_Name}/CMakeLists.txt
-        ${Git_Name}/REY_Logger.hh
-        ${Git_Name}/REY_Logger.cpp
+        ${Git_CloneDir_Name}/CMakeLists.txt
+        ${Git_CloneDir_Name}/REY_Logger.hh
+        ${Git_CloneDir_Name}/REY_Logger.cpp
 
-      # ${Git_Name}/src/fmt.cc
-      # ${Git_Name} folder itself is inside ${REY_FETCH_${TN}_BASE_DIR} --> We will handle that part
+      # ${Git_CloneDir_Name}/src/fmt.cc
+      # ${Git_CloneDir_Name} folder itself is inside ${REY_FETCH_${TN}_BASE_DIR} --> We will handle that part
     )
     set(Binary_Names
         REY_LoggerNUtils.lib
