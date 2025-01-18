@@ -1,6 +1,7 @@
 # REY_LoggerNUtils `V0.3`
 - `V0.4`:- WIP
     - `REY_FetchV4`
+    - WIP: StackTrace on Crash / Signal Handler / `google breakpad` + `boost stacktrace` + `StackWalker` + `google crashpad` + `sentry` + `raygun` + `BugSnag` + `RollBar`
 - `V0.3`:- DONE
     - `.install`:- it's a Folder for `lib-REY_LoggerNUtils.lib` & "external libraries" installation
     - added `.forge/CMakeFiles/REY_FetchV2_fmt.cmake`
@@ -50,10 +51,31 @@ git add submoule https://github.com/REYNEP/REY_LoggerNUtils <path>
 # Way 4:- Ninja/MakeFiles + Python Downloader Script [TBA]
 ```
 
+</br>
+</br>
+</br>
+</br>
+
+## External Libraries [`.forge`]
 1. `fmt`:- automatically **"FETCHED"** --> Built --> **"PUBLIC"** Linked to `REY_LoggerNUtils` by CMAKE
     - **"PUBLIC"** Linked:- Will be available to you too:- 
         - i.e. You can `#include <fmt/core.h>`
         - & `fmt` will be automatically linked as you are linking `REY_LoggerNUtils` in CMAKE
+    - Official Git:- https://github.com/fmtlib/fmt
+    - What is it?  :- https://github.com/fmtlib/fmt?tab=readme-ov-file#examples
+    - CMake / Using:- https://fmt.dev/11.1/get-started/
+    - CheatSheet / Code Examples:- https://hackingcpp.com/cpp/libs/fmt.html
+
+2. `.forge`:- `lib-REY_LoggerNUtils.lib` will be INSTALLED here
+    - `fmt` will be fetched here & installed here
+    - I store/fetch/modify/custom-build External Libraries in here
+    - For the whole idea, check:- idk https://github.com/REYNEP/idk/tree/33da809ede9e6ecc4f1a9d2c7c222ca27acff013
+
+3. `google breakpad`:- StackTracer on Crash Library. very hard to build on windows.
+    - However I found a really cool & nice wiki & how-to about it
+    - https://github.com/d1vanov/quentier/wiki/Building-and-installation-of-Quentier's-dependencies#building-google-breakpad
+    - Took me Half an hour to find this guide & finally fkin build this shit
+    - Building Google Breakpad on Windows:- THE GUIDE/WIKI Link Above
 
 ```py
 # --------------------
@@ -69,28 +91,11 @@ git add submoule https://github.com/REYNEP/REY_LoggerNUtils <path>
 # --------------------
 ```
 
-
 </br>
 </br>
 </br>
 </br>
 
-## External Libraries [`.forge`]
-1. `fmt`:- Official Git:- https://github.com/fmtlib/fmt
-    - What is it?  :- https://github.com/fmtlib/fmt?tab=readme-ov-file#examples
-    - CMake / Using:- https://fmt.dev/11.1/get-started/
-    - CheatSheet / Code Examples:- https://hackingcpp.com/cpp/libs/fmt.html
-
-2. `.forge`:- `lib-REY_LoggerNUtils.lib` will be INSTALLED here
-    - `fmt` will be fetched here & installed here
-    - I store/fetch/modify/custom-build External Libraries in here
-    - For the whole idea, check:- idk https://github.com/REYNEP/idk/tree/33da809ede9e6ecc4f1a9d2c7c222ca27acff013
-
-
-</br>
-</br>
-</br>
-</br>
 
 ## OLD Notes [will be refactored later]:
 - No `#include <cstdlib>` or `#include <iostream>`  such thing is done in the headers
