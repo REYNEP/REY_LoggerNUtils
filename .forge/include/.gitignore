@@ -1,0 +1,4 @@
+/breakpad
+# So many files inside.
+# Better to download .zip & unzip
+# However I decidec to natively keep the .libs inside my git repo

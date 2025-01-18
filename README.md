@@ -76,6 +76,8 @@ git add submoule https://github.com/REYNEP/REY_LoggerNUtils <path>
     - https://github.com/d1vanov/quentier/wiki/Building-and-installation-of-Quentier's-dependencies#building-google-breakpad
     - Took me Half an hour to find this guide & finally fkin build this shit
     - Building Google Breakpad on Windows:- THE GUIDE/WIKI Link Above
+    - BREAKPAD vs CRASHPAD
+        - https://stackoverflow.com/questions/52725299/what-is-the-difference-between-googles-breakpad-and-crashpad-libraries
 
 ```py
 # --------------------

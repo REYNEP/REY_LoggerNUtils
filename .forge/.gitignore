@@ -1,6 +1,3 @@
-*
-!.gitignore
-
-# don't ignore CMakeFiles folder itself & files inside it
-!CMakeFiles/
-!CMakeFiles/*
+/fmt/
+/fmt_Download_stdout.log
+/breakpad-installdir
