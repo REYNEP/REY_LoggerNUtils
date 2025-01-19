@@ -34,6 +34,9 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 
     # elseif(  (DEFINED Git_SubModule)   AND   (NOT "${Git_SubModule}" STREQUAL "")  )
         # git submodule init / update
+
+    # eleseif(   (DEFINED zip_links)     AND     (NOT "${zip_links}" STREQUAL "")  )
+        # download ${zip_links} --> unzip
         
     # else()
         # if(NOT EXISTS ${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name} )
@@ -170,6 +173,59 @@ elseif(  (DEFINED Git_SubModule)   AND   (NOT "${Git_SubModule}" STREQUAL "")  )
 
         add_subdirectory(${Git_SubModule})    #Output:- ${Target_Name}
 
+
+elseif(  (DEFINED zip_links)   AND   (NOT "${zip_links}" STREQUAL "")  )
+
+    list(LENGTH zip_links N)
+    math(EXPR N "${N} - 1")
+
+    set(loopStep 3)
+    foreach(i RANGE 0 ${N} ${loopStep})
+        math(EXPR j "${i} + 1")
+        math(EXPR k "${i} + 2")
+        list(GET zip_links ${i} LINK)
+        list(GET zip_links ${j} SAVE_DIR)
+        list(GET zip_links ${k} FILE_NAME)
+        
+        message(STATUS "                        ")
+        message(STATUS "Link: ${LINK}")
+        message(STATUS "Save_Dir: ${SAVE_DIR}")
+        message(STATUS "File_Name:- ${FILE_NAME}")
+        message(STATUS "                        ")
+        
+        if(NOT EXISTS ${SAVE_DIR}/${FILE_NAME})
+            # Download the zip file
+            message(STATUS "Downloading File")
+            file(DOWNLOAD ${LINK} ${SAVE_DIR}/${FILE_NAME})
+
+            # Extract the zip file
+            message(STATUS "UnZipping File")
+            if(WIN32)
+                message(STATUS "Windows PowerShell")
+                execute_process(
+                    COMMAND powershell -Command "Expand-Archive -Path ${SAVE_DIR}/${FILE_NAME} -DestinationPath ${SAVE_DIR} -Force"
+                    RESULT_VARIABLE   result
+                    OUTPUT_FILE       ${FILE_NAME}.unzip.log  ERROR_FILE      ${FILE_NAME}.unzip.log
+                    WORKING_DIRECTORY ${SAVE_DIR}
+                )
+            else()
+                message(STATUS "unix 'unzip' command")
+                execute_process(
+                    COMMAND unzip -o -d ${SAVE_DIR} ${SAVE_DIR}/${FILE_NAME}
+                    # -o means overwrite
+                    # -o option should be placed immediately after the unzip command
+                    # -d means directory to unzip into
+                    RESULT_VARIABLE result
+                    OUTPUT_FILE       ${FILE_NAME}.unzip.log  ERROR_FILE      ${FILE_NAME}.unzip.log
+                    WORKING_DIRECTORY ${SAVE_DIR}
+                )
+            endif()
+        endif()
+
+        if(result)
+            message(FATAL_ERROR "Failed to extract ${SAVE_DIR}/${FILE_NAME}")
+        endif()
+    endforeach()
 
 else()
 

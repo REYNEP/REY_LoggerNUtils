@@ -44,6 +44,9 @@ set_target_properties      (REY_LoggerNUtils  PROPERTIES  OUTPUT_NAME "lib-REY_L
     include(${CMAKE_CURRENT_SOURCE_DIR}/REY_FetchV4/REY_FetchV4.fmt.cmake)  # Output:- fmt::fmt
     target_link_libraries  (REY_LoggerNUtils PUBLIC fmt::fmt)
 
+# ------breakpad------
+    include(${CMAKE_CURRENT_SOURCE_DIR}/REY_FetchV4/REY_FetchV4.breakpad.cmake)
+
 # -----bli-assert-----
     if(WIN32)                                                       # for Windows operating system in general
         target_link_libraries  (REY_LoggerNUtils PUBLIC Dbghelp.lib Version.lib Shlwapi.lib)
