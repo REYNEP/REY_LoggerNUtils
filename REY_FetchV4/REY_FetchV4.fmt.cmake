@@ -3,7 +3,7 @@
 
 include(${CMAKE_CURRENT_LIST_DIR}/REY_FetchV4_X.fmt.cmake)
 
-if(  (DEFINED REY_FetchV4_MODS_PATH)   AND   (${REY_FetchV4_MODS_PATH} NOT STREQUAL ""))
+if(  (DEFINED REY_FetchV4_MODS_PATH)   AND   (NOT "${REY_FetchV4_MODS_PATH}" STREQUAL ""))
     if (EXISTS  ${REY_FetchV4_MODS_PATH}/REY_FetchV4_MOD.fmt.cmake)
         include(${REY_FetchV4_MODS_PATH}/REY_FetchV4_MOD.fmt.cmake)
     endif()

@@ -1,6 +1,6 @@
-# REY_LoggerNUtils `V0.3`
+# REY_LoggerNUtils `V0.4`
 - `V0.4`:- WIP
-    - `REY_FetchV4`
+    - `REY_FetchV4`:- 1.Scout, 2.Submodule, 3.ZipLinks, 4.Clone/Fetch 😊 
     - WIP: StackTrace on Crash / Signal Handler / `google breakpad` + `boost stacktrace` + `StackWalker` + `google crashpad` + `sentry` + `raygun` + `BugSnag` + `RollBar`
 - `V0.3`:- DONE
     - `.install`:- it's a Folder for `lib-REY_LoggerNUtils.lib` & "external libraries" installation

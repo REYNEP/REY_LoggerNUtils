@@ -1,7 +1,11 @@
 ```py
+0. REY_FetchV4 --> Mix of it all below
+    +5:- Use Github to keep track of LIBS & Include Versions
+         https://github.com/REYNEP/libs-win32
+         https://github.com/REYNEP/libs-include
+
 1. How Blender Does it --> 4/10
     -1:- Libs & Include has to be Manually Updated.
-    +5:- Use Github to keep track of LIBS & Include Versions
 
 2. CMAKE FETCH --> 7/10
     -1:- Download Progress is shown by taking up so many lines, like hundreds.

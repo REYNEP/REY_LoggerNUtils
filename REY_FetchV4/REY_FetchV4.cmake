@@ -27,19 +27,19 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # Pseudocode for this file
 # ----------------------------------------
     # if (REY_SCOUT_${TN}_PATHS != "")
-        # find_library(${Binary_Names})
+        # find_library(${Binary_Hints})
         # find_path(${TN}/${Header_Name})
         # USE:- REY_SCOUT_${TN}_PATHS
         # Check FOUND / LOG FATAL ERROR
 
-    # elseif(  (DEFINED Git_SubModule)   AND   (NOT "${Git_SubModule}" STREQUAL "")  )
+    # else if(  (DEFINED Git_SubModule)   AND   (NOT "${Git_SubModule}" STREQUAL "")  )
         # git submodule init / update
 
-    # eleseif(   (DEFINED zip_links)     AND     (NOT "${zip_links}" STREQUAL "")  )
-        # download ${zip_links} --> unzip
+    # else if(   (DEFINED Zip_Links)     AND     (NOT "${Zip_Links}" STREQUAL "")  )
+        # download ${Zip_Links} --> unzip
         
     # else()
-        # if(NOT EXISTS ${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name} )
+        # if( NOT EXISTS ${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name} )
             # git clone ${Git_Link}
             # add_subdirectory(${Git_CloneDir_Name})
         # else()
@@ -64,10 +64,10 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
     endif()
 # --------------------
 if (  (DEFINED REY_SCOUT_${TN}_PATHS)   AND   (NOT "${REY_SCOUT_${TN}_PATHS}" STREQUAL "")  )
-    # ================================ FINDING ${Binary_Names} =================================
+    # ================================ FINDING ${Binary_Hints} =================================
         find_library(tmp_scout_${TN}_lib
             NAMES
-                ${Binary_Names}
+                ${Binary_Hints}
             DOC
                 ""
             PATHS
@@ -93,7 +93,7 @@ if (  (DEFINED REY_SCOUT_${TN}_PATHS)   AND   (NOT "${REY_SCOUT_${TN}_PATHS}" ST
             message(STATUS "[REY_FetchV3_${TN}]")
             message(STATUS "    Found 1 File:- ${tmp_scout_${TN}_lib}")
         endif()
-    # ================================ FINDING ${Binary_Names} =================================
+    # ================================ FINDING ${Binary_Hints} =================================
 
 
     # ================================ FINDING ${Header_Name} =================================
@@ -174,18 +174,18 @@ elseif(  (DEFINED Git_SubModule)   AND   (NOT "${Git_SubModule}" STREQUAL "")  )
         add_subdirectory(${Git_SubModule})    #Output:- ${Target_Name}
 
 
-elseif(  (DEFINED zip_links)   AND   (NOT "${zip_links}" STREQUAL "")  )
+elseif(  (DEFINED Zip_Links)   AND   (NOT "${Zip_Links}" STREQUAL "")  )
 
-    list(LENGTH zip_links N)
+    list(LENGTH Zip_Links N)
     math(EXPR N "${N} - 1")
 
     set(loopStep 3)
     foreach(i RANGE 0 ${N} ${loopStep})
         math(EXPR j "${i} + 1")
         math(EXPR k "${i} + 2")
-        list(GET zip_links ${i} LINK)
-        list(GET zip_links ${j} SAVE_DIR)
-        list(GET zip_links ${k} FILE_NAME)
+        list(GET Zip_Links ${i} LINK)
+        list(GET Zip_Links ${j} SAVE_DIR)
+        list(GET Zip_Links ${k} FILE_NAME)
         
         message(STATUS "                        ")
         message(STATUS "Link: ${LINK}")

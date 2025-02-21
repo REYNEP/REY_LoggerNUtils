@@ -1,9 +1,22 @@
 ## V4
 1. `REY_FetchV4.cmake`:- THE SOFTWARE
-2. `REY_FetchV4_X.<lib-name>.cmake`:- "X" = variables 😃
-3. `REY_FetchV4_X_RESET.cmake`:- RESET ---> EMPTY-STRINGs
-4. `REY_FetchV4.<lib-name>.cmake`:- INTERFACE = Includes and Patches/Joins/Connets Together 😄
-5. `REY_FetchV4_MOD.<lib-name>.cmake`:- Modifying Variables 😊
+2. `REY_FetchV4_X.  <lib-name>.cmake`:- "X" = variables 😃
+3. `REY_FetchV4_MOD.<lib-name>.cmake`:- Modifying Variables 😊
+4. `REY_FetchV4.    <lib-name>.cmake`:- INTERFACE = Includes and Patches/Joins/Connets Together 😄
+5. `REY_FetchV4_X_RESET.cmake`:- RESET ---> EMPTY-STRINGs
+
+
+```cpp
+# 4 Ways/Flavours [more to be added]
+# ----------------------------------------
+    1. find_library() + find_path()
+    2. Git_SubModule()
+    3. Zip_Links()
+    4. Git_Clone() [faster than CMAKE_FETCH]
+
+Pseudocode inside REY_FetchV4.cmake
+# ----------------------------------------
+```
 
 
 ## V4
