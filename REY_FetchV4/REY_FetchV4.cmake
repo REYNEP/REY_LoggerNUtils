@@ -159,14 +159,16 @@ if (  (DEFINED REY_SCOUT_${TN}_PATHS)   AND   (NOT "${REY_SCOUT_${TN}_PATHS}" ST
 elseif(  (DEFINED Git_SubModule)   AND   (NOT "${Git_SubModule}" STREQUAL "")  )
 
 
-        message(STATUS "UPDATING SUBMODULE ${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name}")
-        message(STATUS "Download Progress logged inside ${REY_FETCH_${TN}_BASE_DIR}/${TN}_Download_stdout.log ")
+        message(STATUS "[UPDATING SUBMODULE]:- ${Git_SubModule}")
+        message(STATUS "[Command Outputs in]:- ${CMAKE_CURRENT_SOURCE_DIR}/.forge/REY_FetchV4_git_submodule_stdout.log")
     execute_process(
         COMMAND             git submodule init
         COMMAND             git submodule update
         WORKING_DIRECTORY ${Git_SubModule}
 
-        TIMEOUT 10              # seconds
+        OUTPUT_FILE     ${CMAKE_CURRENT_SOURCE_DIR}/.forge/REY_FetchV4_git_submodule_stdout.log
+        ERROR_FILE      ${CMAKE_CURRENT_SOURCE_DIR}/.forge/REY_FetchV4_git_submodule_stdout.log  
+        TIMEOUT 60              # seconds
         COMMAND_ECHO STDOUT     # output's the part after "COMMAND" few lines above
     )
         message(STATUS "Updating Done")
