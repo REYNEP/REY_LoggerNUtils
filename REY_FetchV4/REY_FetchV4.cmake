@@ -103,6 +103,10 @@ if (  (DEFINED REY_SCOUT_${TN}_PATHS)   AND   (NOT "${REY_SCOUT_${TN}_PATHS}" ST
             PATHS
                 ${REY_SCOUT_${TN}_PATHS}
             PATH_SUFFIXES
+                include/
+                includes/
+                include/include/
+                extern-includes/
                 ${TN}
                 ${TN}/include
                 ${TN}/include/${TN}
@@ -129,7 +133,7 @@ if (  (DEFINED REY_SCOUT_${TN}_PATHS)   AND   (NOT "${REY_SCOUT_${TN}_PATHS}" ST
 
 
     # =============================== if BOTH ARE FOUND =================================
-        if (REY_SCOUT_${TN}_LIB AND REY_SCOUT_${TN}_INCLUDE)
+        if (DEFINED REY_FOUND_${TN}_LIBRARY AND DEFINED REY_FOUND_${TN}_INCLUDE)
             #         see Target_Name
             add_library(
                 ${Target_Name} STATIC 
@@ -143,7 +147,7 @@ if (  (DEFINED REY_SCOUT_${TN}_PATHS)   AND   (NOT "${REY_SCOUT_${TN}_PATHS}" ST
             )
             message(STATUS "[REY_FetchV3_${TN}]")
             message(STATUS "    Created imported target ${Target_Name}")
-            message(STATUS "    [cached] REY_FOUND_${TN}_LIB:-    ${REY_FOUND_${TN}_LIB}")
+            message(STATUS "    [cached] REY_FOUND_${TN}_LIB:-    ${REY_FOUND_${TN}_LIBRARY}")
             message(STATUS "    [cached] REY_FOUND_${TN}_INCLUDE: ${REY_FOUND_${TN}_INCLUDE}")
         else ()
             message(STATUS "REY_SCOUT_${TN}_PATHS:- ${REY_SCOUT_${TN}_PATHS}")

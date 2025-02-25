@@ -36,7 +36,7 @@ int main(void) {
 
 ## Building / Using [SUMMARY]
 It's basically automatically handled 😉:-
-```sh
+```py
 git clone https://github.com/REYNEP/REY_LoggerNUtils <path>
 # or 
 git add submoule https://github.com/REYNEP/REY_LoggerNUtils <path>
@@ -65,7 +65,7 @@ Way 3:- REY_FetchV4
 Way 4:- Meson & Premake Support [TBA]
 Way 5:- Ninja/MakeFiles + Python Downloader Script [TBA]
 ```
-```cmake
+```py
 # --------------------
 # OUTPUT Options:- 
 #       Library Name:- REY_LoggerNUtils
