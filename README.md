@@ -33,6 +33,7 @@ int main(void) {
 // TBA
 ```
 
+<div style="page-break-after: always;"></div>
 
 ## Building / Using [SUMMARY]
 It's basically automatically handled 😉:-
@@ -83,6 +84,7 @@ Way 5:- Ninja/MakeFiles + Python Downloader Script [TBA]
 </br>
 </br>
 </br>
+<div style="page-break-after: always;"></div>
 
 ## External Libraries [`.forge`]
 0. assuming that you did `add_subdirectory(REY_LoggerNUtils)` in your CMakeLists.txt
@@ -129,6 +131,7 @@ Way 5:- Ninja/MakeFiles + Python Downloader Script [TBA]
 </br>
 </br>
 </br>
+<div style="page-break-after: always;"></div>
 
 ## Features:-
 1. `REY_Logger.hh` is **_lightweight_**

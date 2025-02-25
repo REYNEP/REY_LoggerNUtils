@@ -29,7 +29,7 @@ Pseudocode inside REY_FetchV4.cmake
 5. `REY_FetchV4_X_Reset.cmake`:- RESETs the Variables back to EMPTY-STRING
 
 
-```cmake
+```cpp
 # Problem:- Authors that are gonna use "REY_LoggerNUtils" will need to modify variables inside ".forge/CMakeFiles/REY_FetchV3_fmt.cmake"
 #           But How can they? That file is inside REYNEP's "REY_LoggerNUtils" Repo.
 
