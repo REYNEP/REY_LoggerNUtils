@@ -18,6 +18,7 @@
     set(REY_FETCH_${TN}_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.forge)
     set(Git_Link "https://github.com/fmtlib/fmt")
     set(Git_CloneDir_Name fmt)
+    set(Git_Clone_Recursive OFF)
     set(Git_CheckFiles
         ${Git_CloneDir_Name}/CMakeLists.txt
         ${Git_CloneDir_Name}/src/fmt.cc

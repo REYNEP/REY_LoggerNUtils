@@ -1,3 +1,20 @@
 /fmt/
 /fmt_Download_stdout.log
+/rapidyaml/
+/rapidyaml_Download_stdout.log
 /breakpad-installdir
+
+# Ignore everything
+*
+
+# Unignore directories so we can navigate to the specific file
+!rapidyaml_DeepSeek_Example.md
+!BREAKPAD_ChatGPT_CheatSheet.md
+!BREAKPAD_ChatGPT_CheatSheet.pdf
+!README.md
+!README.pdf
+
+!.gitignore
+
+!include/
+!lib/

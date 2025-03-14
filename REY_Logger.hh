@@ -43,7 +43,7 @@
    ╹ ╹   ┗━╸┗━┛┗━┛╺━╸┗━╸╹ ╹
  */
 #ifdef _WIN32
-#define REY_LOG_EX(x) REY_LOG("\n" << x << "  [stackTrace below]: "); REY_only_stacktrace(0); //Cuttoff from BLI_system_backtrace, only for windows....
+#define REY_LOG_EX(x) REY_LOG("\n" << x << "[stackTrace below]: "); REY_only_stacktrace(0); //Cuttoff from BLI_system_backtrace, only for windows....
 #else
 #define REY_LOG_EX(x) REY_LOG("\n" << x); BLI_system_backtrace(0); //linux does better job. and default BLI_system_backtrace is cool too!
 #endif

@@ -64,6 +64,7 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
     endif()
 # --------------------
 if (  (DEFINED REY_SCOUT_${TN}_PATHS)   AND   (NOT "${REY_SCOUT_${TN}_PATHS}" STREQUAL "")  )
+    message(STATUS "\n\nWay-1. Finding ${Binary_Hints} & ${Header_Name} in ${REY_SCOUT_${TN}_PATHS}")
     # ================================ FINDING ${Binary_Hints} =================================
         find_library(tmp_scout_${TN}_lib
             NAMES
@@ -161,7 +162,7 @@ if (  (DEFINED REY_SCOUT_${TN}_PATHS)   AND   (NOT "${REY_SCOUT_${TN}_PATHS}" ST
 
 
 elseif(  (DEFINED Git_SubModule)   AND   (NOT "${Git_SubModule}" STREQUAL "")  )
-
+    message(STATUS "\n\nWay-2. Updating Submodule ${Git_SubModule}")
 
         message(STATUS "[UPDATING SUBMODULE]:- ${Git_SubModule}")
         message(STATUS "[Command Outputs in]:- ${CMAKE_CURRENT_SOURCE_DIR}/.forge/REY_FetchV4_git_submodule_stdout.log")
@@ -181,6 +182,7 @@ elseif(  (DEFINED Git_SubModule)   AND   (NOT "${Git_SubModule}" STREQUAL "")  )
 
 
 elseif(  (DEFINED Zip_Links)   AND   (NOT "${Zip_Links}" STREQUAL "")  )
+    message(STATUS "\n\nWay-3. Zip_Links")
 
     list(LENGTH Zip_Links N)
     math(EXPR N "${N} - 1")
@@ -234,19 +236,25 @@ elseif(  (DEFINED Zip_Links)   AND   (NOT "${Zip_Links}" STREQUAL "")  )
     endforeach()
 
 else()
-
+    message(STATUS "\n\nWay-4. Clone/Fetching ${Git_Link} into ${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name}")
 
 
     if( (NOT EXISTS ${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name}) )
         message(STATUS "Fetching ${Git_Link}"   "inside ${REY_FETCH_${TN}_BASE_DIR}")
         message(STATUS "Download Progress logged inside ${REY_FETCH_${TN}_BASE_DIR}/${TN}_Download_stdout.log ")
 
+        if (Git_Clone_Recursive) # Input Option from REY_FetchV4_X
+            set(RECURSIVE --recursive)
+        else()
+            set(RECURSIVE)
+        endif()
+
             execute_process(
                 #COMMAND powershell -Command "Start-Process git -ArgumentList 'clone https://github.com/fmtlib/fmt' 
                 #                   -NoNewWindow -RedirectStandardOutput hoga.txt -RedirectStandardError hoga.txt -Wait"
                 # https://www.baeldung.com/linux/git-clone-redirect-output-file
-                #COMMAND cmd /c "git clone --progress ${Git_Link} ${Git_CloneDir_Name} > ${TN}_Download.log 2>&1"
-                 COMMAND         git clone --progress ${Git_Link} ${Git_CloneDir_Name}
+                #COMMAND cmd /c "git clone --progress ${RECURSIVE} ${Git_Link} ${Git_CloneDir_Name} > ${TN}_Download.log 2>&1"
+                 COMMAND         git clone --progress ${RECURSIVE} ${Git_Link} ${Git_CloneDir_Name}
 
                 #COMMAND        "git clone https://github.com/fmtlib/fmt"
                 # With Quotation marks, it doesn't redirect stdout to OUTPUT_FILE/VARIABLE
@@ -254,17 +262,20 @@ else()
                 WORKING_DIRECTORY ${REY_FETCH_${TN}_BASE_DIR}
 
                 # OUTPUT_VARIABLE tmp_stdout               ERROR_VARIABLE tmp_stdout
-                  OUTPUT_FILE     fmt_Download_stdout.log  ERROR_FILE     fmt_Download_stdout.log   
+                  OUTPUT_FILE     ${Git_CloneDir_Name}_Download_stdout.log  ERROR_FILE     ${Git_CloneDir_Name}_Download_stdout.log   
                 # Both doesn't work @ the same time
 
                 RESULT_VARIABLE result_code
 
-                TIMEOUT 10              # seconds
+                TIMEOUT 30              # seconds
                 COMMAND_ECHO STDOUT     # output's the part after "COMMAND" few lines above
             )
 
-        if (result_code NOT EQUAL 0)
-            message(FATAL_ERROR "git clone ${Git_Link} failed.... check ${REY_FETCH_${TN}_BASE_DIR}/fmt_Download_stdout.log")
+        if (NOT (result_code EQUAL 0))
+            message(STATUS "                                     ")
+            message(FATAL_ERROR "git clone ${Git_Link} failed.... check ${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name}_Download_stdout.log"
+                                "\n"
+                                "RESULT_VARIABLE:- ${result_code}")
         endif()
         #file(READ "${REY_FETCH_${TN}_BASE_DIR}/${TN}_Download_stdout.log" tmp_stdout)
         #message(STATUS "tmp_stdout:- ${tmp_stdout}")
@@ -273,6 +284,11 @@ else()
 
         add_subdirectory(${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name})    #Output:- ${Target_Name}
     else()
+        if (Git_Clone_Recursive) # Input Option from REY_FetchV4_X
+            message(STATUS "Make sure Recursive Cloning was done for ${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name}")
+            message(STATUS "Errors will happen, if it wasn't....")
+        endif()
+
         set(GitHub_FILES_isOK TRUE)
         foreach(file_x ${Git_CheckFiles})
             if(NOT EXISTS "${REY_FETCH_${TN}_BASE_DIR}/${file_x}")

@@ -47,6 +47,10 @@ set_target_properties      (REY_LoggerNUtils  PROPERTIES  OUTPUT_NAME "lib-REY_L
 # ------breakpad------
     include(${CMAKE_CURRENT_SOURCE_DIR}/REY_FetchV4/REY_FetchV4.breakpad.cmake)
 
+# -----rapidyaml------
+    include(${CMAKE_CURRENT_SOURCE_DIR}/REY_FetchV4/REY_FetchV4.rapidyaml.cmake)
+    target_link_libraries  (REY_LoggerNUtils PUBLIC ryml::ryml)
+
 # -----bli-assert-----
     if(WIN32)                                                       # for Windows operating system in general
         target_link_libraries  (REY_LoggerNUtils PUBLIC Dbghelp.lib Version.lib Shlwapi.lib)

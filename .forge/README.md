@@ -1,30 +1,38 @@
+# 📔 Why `.forge`?
+### 1. What is `.forge`?
+- it's just like `build` / `build-x64` / `.build` folders
+- but with some extra ideas 😜
+### 2. When will you need this?
+- Answer:- *When you wanna do more than just `build` inside `build`-dir 💁‍♀️*
+### 3. Why is this important?
+- To keep stuffs ORGANIZED
+### 4. Why yet another differnet name for the same old `build` directory?
+- To keep more stuffs inside
+- we can download external stuffs inside this folder, instead of doing it outside of the Source/Root directory 
+    - [which is what big project usually does]
+- we can have `.forge/build` or `.forge/build-cmake` all different types of thingies. They don't have to be @ Source/Root directory
+### 5. Why should YOU use this concept?
+- When you don't wanna clutter the Source/Root directory of your Library/Program
+### 6. How does this work?
+- *Well, the Draft/First-Proposal is below*
+
+# 📜 Draft - Second Proposal
 ```py
-0. REY_FetchV4 --> Mix of it all below
-    +5:- Use Github to keep track of LIBS & Include Versions
-         https://github.com/REYNEP/libs-win32
-         https://github.com/REYNEP/libs-include
+.repo
+    |- .forge
+        |- .build-x64
+        |- .build_CMAKE = CMake Configuration & Building. VSCODE Settings:- "cmake.buildDirectory"
 
-1. How Blender Does it --> 4/10
-    -1:- Libs & Include has to be Manually Updated.
+        |- include = external library stuffs
+        |- lib = external library stuffs [probably zips that got downloaded/unzipped]
 
-2. CMAKE FETCH --> 7/10
-    -1:- Download Progress is shown by taking up so many lines, like hundreds.
-    -2:- Can't Fetch SPECIFIC Folder/SubDirectory from a repo from GITHUB
-
-3. Python Script to Download --> 5/10
-4. GIT SubModule --> 4/10
-5. Maintaining a .zip in GDrive --> 2/10
-6. Just supplying all the external library binaries along with the project souurce --> 1/10
+        |- <ext-lib> = maybe a cloned / submodule external library
+                     = also maybe, you used REY_FetchV4 to Grab it 😊
 ```
 
-### My Approach to External Libraries:- `CMAKE_FETCH` + Blender's Approach
-    1. CMAKE_FETCH most stuffs ----> like fmt
-    2. .libs_REYMOD = Libraries CUT/Stripped/Modified by REYNEP ----> like vulkan
-        Supplying these like Blender supplies their External Libraries
+<div style="page-break-after: always;"></div>
 
-    3. Even the stuff inside .libs_REYMOD would be fetches by CMAKE 😜
-
-## Draft - First Proposal for .forge directory
+# 🛠️ Draft - First Proposal for .forge directory
 ```py
 .repo
     |- .forge

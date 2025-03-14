@@ -112,6 +112,8 @@
     set(Git_CloneDir_Name fmt
         # git clone <link> ----> auto creates a Directory. This variable should store that name
     )
+    set(Git_Clone_Recursive OFF)
+        # git clone --recursive https://github.com/biojppm/rapidyaml
     set(Git_CheckFiles
           ${Git_CloneDir_Name}/CMakeLists.txt
           ${Git_CloneDir_Name}/src/fmt.cc
