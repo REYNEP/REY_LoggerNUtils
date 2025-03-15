@@ -14,5 +14,7 @@ endif()
     set(CMAKE_INSTALL_LIBDIR ${CMAKE_INSTALL_PREFIX}/extern-libs  CACHE PATH "" FORCE)
     # [If you change above stuffs]:- RERUN:- FRESH CONFIGURATION, BUILD, INSTALL
 
+    option(FMT_INSTALL "" OFF)
+
 include(${CMAKE_CURRENT_LIST_DIR}/REY_FetchV4.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/REY_FetchV4_X_RESET.cmake)

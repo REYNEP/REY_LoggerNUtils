@@ -38,6 +38,7 @@ project("REY_LoggerNUtils_PROJECT" VERSION 0.1)
 add_library                (REY_LoggerNUtils ${SRC})
 target_include_directories (REY_LoggerNUtils PUBLIC ${INC})
 set_target_properties      (REY_LoggerNUtils  PROPERTIES  OUTPUT_NAME "lib-REY_LoggerNUtils"  PREFIX "")
+set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/.install CACHE PATH "" FORCE)
 
 # --------fmt---------
     #                                    input:- ${REY_FETCH_FMT_BASE_DIR]
@@ -73,5 +74,5 @@ set_target_properties      (REY_LoggerNUtils  PROPERTIES  OUTPUT_NAME "lib-REY_L
         ${CMAKE_CURRENT_SOURCE_DIR}/REY_Logger.hh
         ${CMAKE_CURRENT_SOURCE_DIR}/REY_LoggerEXT.hh
         ${CMAKE_CURRENT_SOURCE_DIR}/REY_Utils.hh
-        DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/.install/include/REY_LoggerNUtils)
+        DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/.install/REY_LoggerNUtils)
 

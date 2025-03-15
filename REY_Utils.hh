@@ -3,8 +3,7 @@
 #ifndef REY_LOGGER_HH
   #include "REY_Logger.hh"
 #endif
-#include <stdint.h>
-#include <stddef.h>
+#include "REY_Types.hh"
 
 /** 
  *  ╻ ╻   ┏━┓┏┳┓╻ ╻╻┏    ┏━┓┏━┓┏━┓┏━┓╻ ╻
