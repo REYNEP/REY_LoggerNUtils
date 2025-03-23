@@ -21,7 +21,7 @@ struct REY_Array {
   /** CONSTRUCTOR - More like failsafes.... */
   REY_Array(T *D, uint32_t N) : data(D), n(N) {}
   REY_Array(T *D, uint32_t N, uint32_t NEXT) : data(D), n(N), neXt(NEXT) {}
-  REY_Array(void) {data = nullptr; n = 0;}
+  REY_Array(void) {data = nullptr; n = 0; neXt = 0;}
   ~REY_Array() {}
 
   /** 
@@ -49,6 +49,11 @@ struct REY_Array {
     n = otherArray.n;
     neXt = otherArray.neXt;
     return *this;
+  }
+
+  inline void reserve(uint32_t N) {
+    data = new T[N];
+    n = N;
   }
 };
 
@@ -88,6 +93,9 @@ struct REY_Array {
   } \
   var.data[var.neXt++]
 
+// Usage:- REY_ARRAY_PUSH_BACK(integer_array) = 10;
+//         REY_ARRAY_PUSH_BACK(string_array) = "Hello World";
+
 #define REY_ARRAY_PUSH_BACK_SAFE(var) var.data[var.neXt++]
 
 #define REY_ArrayDYN_PUSH_BACK(var)      REY_ARRAY_PUSH_BACK(var)
@@ -111,14 +119,30 @@ struct REY_Array {
  */
 template<typename T> 
 struct REY_ArrayDYN : public REY_Array<T> {
-  REY_ArrayDYN(uint32_t n) : REY_Array<T>() {
-    this->data = new T[n];
-    this->n = n;
+  REY_ArrayDYN(uint32_t N) : REY_Array<T>() {
+    this->data = new T[N];
+    this->n = N;
+    this->neXt = 0;
   }
-  ~REY_ArrayDYN() {}
+ ~REY_ArrayDYN() {}
+  // Constructor that forwards parameters to the base class constructor
+    REY_ArrayDYN(T* data, uint32_t n, uint32_t neXt) : REY_Array<T>(data, n, neXt) {}
+    REY_ArrayDYN(T* data, uint32_t n) : REY_Array<T>(data, n) {}
+    REY_ArrayDYN(void) : REY_Array<T>() {} 
+
+  using REY_Array<T>::n;
+  using REY_Array<T>::neXt;
+  using REY_Array<T>::data;
 
   /** you can Delete this object instance after calling this function */
   inline void _delete(void) { delete[] this->data; }
+
+  /** Only use this if `.data = nullptr` otherwise, memory-handle gone */
+  void initialize(uint32_t N) {
+    this->data = new T[N];
+    this->n = N;
+    this->neXt = 0;
+  }
 
   /** Makes it 2X sized by default */
   void resize(double size_mul = 2);
@@ -128,9 +152,6 @@ struct REY_ArrayDYN : public REY_Array<T> {
    * masterly advisory. unsteady content
    */
   inline bool should_resize(void) { return (bool)(this->neXt >= this->n); }
-
-  using REY_Array<T>::neXt;
-  using REY_Array<T>::data;
 
   /**
    * data[n] = data[neXt-1]
@@ -328,7 +349,7 @@ void REY_Utils::memview2b(void *ptr, uint32_t how_far) {
     REY_LOG("memview2b: ");
     for (int i = 0; i < n; i++) {
         std::bitset<32> y(*(xd + i));
-        REY_LOG("  " << y.to_string().c_str() << "    - [" << (uint32_t)(xd + i) << "]");
+        REY_LOG("  " << y.to_string().c_str() << "    - [" << (uint64_t)(xd + i) << "]");
     }
     REY_LOG("");
 }

@@ -294,7 +294,7 @@ else()
             if(NOT EXISTS "${REY_FETCH_${TN}_BASE_DIR}/${file_x}")
                 set(GitHub_FILES_isOK FALSE)
 
-                message(STATUS "[REY_FetchV3_${TN}]")
+                message(STATUS "[REY_FetchV4_${TN}]")
                 message(STATUS "     REY_FETCH_${TN}_BASE_DIR:- ${REY_FETCH_${TN}_BASE_DIR}")
                 message(STATUS "dA = REY_FETCH_${TN}_BASE_DIR/${Git_CloneDir_Name} ----> EXISTS")
                 message(STATUS "             Git_CheckFiles --> ${file_x} ----> DOESN't EXIST")

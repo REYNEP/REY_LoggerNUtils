@@ -1,0 +1,39 @@
+- yyJSON
+    - https://github.com/ibireme/yyjson
+    - NewThingy
+    - probably the fastest
+    - not included in the benchmark
+    - but as per, yyjson's own benchmark, they beat rapidjson by 200-300%
+    - only competitor 
+        - simdjson:- https://github.com/simdjson/simdjson
+- cpp-yyJSON
+    - https://github.com/yosh-matsuda/cpp-yyjson
+- TaoJSON
+    - https://github.com/taocpp/json
+    - Seems like, Really nice guys
+    - inspired by nlohmannultra js
+- nlohmann
+    - https://github.com/nlohmann/json?tab=readme-ov-file
+- FastJSON
+    - https://github.com/mikeando/fastjson
+    - really old
+    - nlohmann prolly created his one based on this
+- SimpleJSON
+    - https://github.com/nbsdx/SimpleJSON
+- ultra-json [ujason]
+    - https://github.com/ultrajson/ultrajson
+    - https://github.com/awangk/ujsonyy
+    - https://bitbucket.org/awangk/ujson/src/master/
+    - comparison with python orjson
+        - https://github.com/ultrajson/ultrajson
+- orjson
+    - really fast python library
+    - comparison with ultrajsonuj:- https://github.com/ultrajson/ultrajson
+- gason
+    - https://github.com/vivkin/gason
+- TheBenchmark
+    - https://github.com/miloyip/nativejson-benchmark?tab=readme-ov-file
+- RapidJSON
+    - https://github.com/Tencent/rapidjson
+    - made by TENCENT
+        - f*** em'

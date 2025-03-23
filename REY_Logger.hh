@@ -66,6 +66,7 @@ class REY_Logger {
     REY_Logger& operator<<(const unsigned long long num);
     REY_Logger& operator<<(const double num);
     REY_Logger& operator<<(const long long num);
+    REY_Logger& operator<<(const void *pointer);
     /** But we can't/don't wanna have support for stuffs like std::string */
 };
 
@@ -228,6 +229,10 @@ REY_Logger& REY_Logger::operator<<(const double num) {
 }
 REY_Logger& REY_Logger::operator<<(const long long num) {
     fmt::print("{}", num);
+    return *this;
+}
+REY_Logger& REY_Logger::operator<<(const void *pointer) {
+    fmt::print("{}", pointer);
     return *this;
 }
 

@@ -51,6 +51,10 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/.install CACHE PATH "" FORC
 # -----rapidyaml------
     include(${CMAKE_CURRENT_SOURCE_DIR}/REY_FetchV4/REY_FetchV4.rapidyaml.cmake)
     target_link_libraries  (REY_LoggerNUtils PUBLIC ryml::ryml)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/REY_FetchV4/REY_FetchV4.yyjson.cmake)
+    target_link_libraries  (REY_LoggerNUtils PUBLIC yyjson)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/REY_FetchV4/REY_FetchV4.nlohmannJSON.cmake)
+    target_link_libraries  (REY_LoggerNUtils PUBLIC nlohmann_json)
 
 # -----bli-assert-----
     if(WIN32)                                                       # for Windows operating system in general

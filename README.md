@@ -6,10 +6,10 @@
 2. _**LightWeight StackTracer**_ - [ripped out from blender ]
     - Google Breakpad implementation WIP
 3. _**CMake Package Manager**_:- `REY_FetchV4` - an experiment
-    1. `Scout [/find/look-for]`
+    1. `Scout [/find/look-for]` -> just tell us where to scout/look for/find
     2. `[Git] Submodule`
     3. `ZipLinks`
-    4. `[Git] Clone/Fetch` 😊 
+    4. `[Git] Clone/Fetch` 😊 -> just tell us which repo & cloning path
     - see `.\REY_FetchV4\REY_FetchV4_X_DOCS.cmake`
 
 
@@ -103,6 +103,10 @@ Way 5:- Ninja/MakeFiles + Python Downloader Script [TBA]
     3. `ZipLinks`
     4. `[Git] Clone/Fetch` 😊 
     - see `.\REY_FetchV4\REY_FetchV4_X_DOCS.cmake`
+4. _**Lots of External Libraries:-**_ that you can just directly `#include`
+    1. fmt
+    2. breakpad
+    3. rapidyaml, yyjson, nlohmannJSON
 
 ## ⚖️ License:- *BSL-1.0*
 - Boost Software License - Version 1.0 - August 17th, 2003
@@ -148,42 +152,54 @@ Way 5:- Ninja/MakeFiles + Python Downloader Script [TBA]
 
 ## 📔 External Libraries [`.forge`]
 0. assuming that you did `add_subdirectory(REY_LoggerNUtils)` in your CMakeLists.txt
-1. `fmt`:- automatically **_"Fetched"_** --> **_Built_** --> _"**PUBLIC** linked to `REY_LoggerNUtils`"_
-    - **"PUBLIC"** Linked:- 
-        - i.e. `fmt` will be available to you too
-        - i.e. You can just `#include <fmt/core.h>`
-        - & `fmt` will be automatically linked as you are linking `REY_LoggerNUtils` in CMAKE
-    - `Official Repo`:- https://github.com/fmtlib/fmt
-    - `What is it..?`:- https://github.com/fmtlib/fmt?tab=readme-ov-file#examples
-    - `CMake / Using`:- https://fmt.dev/11.1/get-started/
-    - `CheatSheet / Code Examples`:- https://hackingcpp.com/cpp/libs/fmt.html
-
-2. `.forge`:- 
+1. `.forge`:- 
     - `lib-REY_LoggerNUtils.lib` will be INSTALLED here
     - `fmt` will be fetched here & installed here
     - I store/fetch/modify/custom-build External Libraries in here
     - For the whole idea, check:- https://github.com/REYNEP/REY_LoggerNUtils/tree/main/.forge
+    - ----
+2. 🪵 `Logging/Printing` 🖨️ & 🛠️ `Debugbing/StackTracing` 🧾
+    1. `fmt`:- automatically **_"Fetched"_** --> **_Built_** --> _"**PUBLIC** linked to `REY_LoggerNUtils`"_
+        - **"PUBLIC"** Linked:- 
+            - i.e. `fmt` will be available to you too
+            - i.e. You can just `#include <fmt/core.h>`
+            - & `fmt` will be automatically linked as you are linking `REY_LoggerNUtils` in CMAKE
+        - `Official Repo`:- https://github.com/fmtlib/fmt
+        - `What is it..?`:- https://github.com/fmtlib/fmt?tab=readme-ov-file#examples
+        - `CMake / Using`:- https://fmt.dev/11.1/get-started/
+        - `CheatSheet / Code Examples`:- https://hackingcpp.com/cpp/libs/fmt.html
 
-3. `google breakpad`:- [StackTracer on Crash]
-    - very hard to build on windows.
-      - However I found a really cool & nice wiki & how-to about it
-        - https://github.com/d1vanov/quentier/wiki/Building-and-installation-of-Quentier's-dependencies#building-google-breakpad
-        - Took me Half an hour to find this guide & finally fkin build this shit
-    - Building Google Breakpad on Windows:- [d1vanov's wiki on github](https://github.com/d1vanov/quentier/wiki/Building-and-installation-of-Quentier's-dependencies#building-google-breakpad)
-    - BREAKPAD vs CRASHPAD
-      - https://stackoverflow.com/questions/52725299/what-is-the-difference-between-googles-breakpad-and-crashpad-libraries
-    - `Official Repo`:- https://chromium.googlesource.com/breakpad/breakpad
-    - `What is it..?`:- https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs/breakpad.png
-    - `CMake / Using`:- [d1vanov's wiki on github](https://github.com/d1vanov/quentier/wiki/Building-and-installation-of-Quentier's-dependencies#building-google-breakpad)
-    - `CheatSheet / Code Examples`:- [Mozilla Intro][1], [linux [starter-guide]][2], [mac][3], [windows][4], [processor-design][5], [detes on stack-tracing][6], [chatgpt][8]
-    - `Documentation`:- [HEAD/docs][7]
-4. `rapidyaml`:
-    - `Official Repo`:- https://github.com/biojppm/rapidyaml
-    - `What is it..?`:- https://rapidyaml.readthedocs.io/latest/index.html
-    - `Cmake / Using`:- https://rapidyaml.readthedocs.io/latest/sphinx_using.html#as-a-library
-    - `Outside Usage`:- 
-    - `🚨 Settings `:- https://rapidyaml.readthedocs.io/latest/sphinx_using.html#cmake-build-settings-for-ryml
-    - `CheatSheet / Code Examples`:- CHATGPT/DeepSeek/AI or https://rapidyaml.readthedocs.io/latest/doxygen/group__doc__quickstart.html
+    2. `google breakpad`:- [StackTracer on Crash]
+        - very hard to build on windows.
+        - However I found a really cool & nice wiki & how-to about it
+            - https://github.com/d1vanov/quentier/wiki/Building-and-installation-of-Quentier's-dependencies#building-google-breakpad
+            - Took me Half an hour to find this guide & finally fkin build this shit
+        - Building Google Breakpad on Windows:- [d1vanov's wiki on github](https://github.com/d1vanov/quentier/wiki/Building-and-installation-of-Quentier's-dependencies#building-google-breakpad)
+        - BREAKPAD vs CRASHPAD
+        - https://stackoverflow.com/questions/52725299/what-is-the-difference-between-googles-breakpad-and-crashpad-libraries
+        - `Official Repo`:- https://chromium.googlesource.com/breakpad/breakpad
+        - `What is it..?`:- https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs/breakpad.png
+        - `CMake / Using`:- [d1vanov's wiki on github](https://github.com/d1vanov/quentier/wiki/Building-and-installation-of-Quentier's-dependencies#building-google-breakpad)
+        - `CheatSheet / Code Examples`:- [Mozilla Intro][1], [linux [starter-guide]][2], [mac][3], [windows][4], [processor-design][5], [detes on stack-tracing][6], [chatgpt][8]
+        - `Documentation`:- [HEAD/docs][7]
+        - ----
+
+3. YAML & JSON
+    1. `rapidyaml`:
+        - `Official Repo`:- https://github.com/biojppm/rapidyaml
+        - `What is it..?`:- https://rapidyaml.readthedocs.io/latest/index.html
+        - `Cmake / Using`:- https://rapidyaml.readthedocs.io/latest/sphinx_using.html#as-a-library
+        - `Outside Usage`:- 
+        - `🚨 Settings `:- https://rapidyaml.readthedocs.io/latest/sphinx_using.html#cmake-build-settings-for-ryml
+        - `CheatSheet / Code Examples`:- CHATGPT/DeepSeek/AI or https://rapidyaml.readthedocs.io/latest/doxygen/group__doc__quickstart.html
+    2. `taocpp-json`:
+        - `Official Repo`:- https://github.com/taocpp/json
+        - not including this in `REY_LoggerNUtils/CMakeLists.txt`
+        - but you can use the `REY_FetchV4` files & just include it yourself
+    3. `yyjson`:
+        - `Official Repo`:- https://github.com/ibireme/yyjson
+    4. `nlohmannJSON`:
+        - `Official Repo`:- https://github.com/nlohmann/json
     
 [1]: https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs/mozilla_brown_bag_talk.md
 [2]: https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs/linux_starter_guide.md
