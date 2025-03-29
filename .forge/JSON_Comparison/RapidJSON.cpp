@@ -11,18 +11,18 @@ void amVK_Instance::ExportJSON(void) {
         std::string gpuKey = toSTR(&amVK_GPU_List[i]);
         rapidjson::Value GPU(rapidjson::kObjectType);
 
-        for (int j = 0, lim = amVK_2D_QFAM_PROPs[i].n; j < lim; j++) {
+        for (int j = 0, lim = amVK_2D_GPUs_QFAMs[i].n; j < lim; j++) {
             std::string key = "QueueFamily" + std::to_string(j) + "_Properties";
             rapidjson::Value QFam(rapidjson::kObjectType);
 
-            QFam.AddMember("queueFlags", amVK_2D_QFAM_PROPs[i][j].queueFlags, allocator);
-            QFam.AddMember("queueCount", amVK_2D_QFAM_PROPs[i][j].queueCount, allocator);
-            QFam.AddMember("timestampValidBits", amVK_2D_QFAM_PROPs[i][j].timestampValidBits, allocator);
+            QFam.AddMember("queueFlags", amVK_2D_GPUs_QFAMs[i][j].queueFlags, allocator);
+            QFam.AddMember("queueCount", amVK_2D_GPUs_QFAMs[i][j].queueCount, allocator);
+            QFam.AddMember("timestampValidBits", amVK_2D_GPUs_QFAMs[i][j].timestampValidBits, allocator);
 
             rapidjson::Value minImageTransferGranularity(rapidjson::kObjectType);
-            minImageTransferGranularity.AddMember("width", amVK_2D_QFAM_PROPs[i][j].minImageTransferGranularity.width, allocator);
-            minImageTransferGranularity.AddMember("height", amVK_2D_QFAM_PROPs[i][j].minImageTransferGranularity.height, allocator);
-            minImageTransferGranularity.AddMember("depth", amVK_2D_QFAM_PROPs[i][j].minImageTransferGranularity.depth, allocator);
+            minImageTransferGranularity.AddMember("width", amVK_2D_GPUs_QFAMs[i][j].minImageTransferGranularity.width, allocator);
+            minImageTransferGranularity.AddMember("height", amVK_2D_GPUs_QFAMs[i][j].minImageTransferGranularity.height, allocator);
+            minImageTransferGranularity.AddMember("depth", amVK_2D_GPUs_QFAMs[i][j].minImageTransferGranularity.depth, allocator);
 
             QFam.AddMember("minImageTransferGranularity", minImageTransferGranularity, allocator);
             GPU.AddMember(rapidjson::Value(key.c_str(), allocator), QFam, allocator);

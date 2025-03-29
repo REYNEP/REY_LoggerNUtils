@@ -11,18 +11,18 @@ void amVK_Instance::ExportJSON(void) {
         std::string gpuKey = toSTR(&amVK_GPU_List[i]);
         tao::json::value GPU = tao::json::empty_object;
 
-        for (int j = 0, lim = amVK_2D_QFAM_PROPs[i].n; j < lim; j++) {
+        for (int j = 0, lim = amVK_2D_GPUs_QFAMs[i].n; j < lim; j++) {
             std::string key = "QueueFamily" + std::to_string(j) + "_Properties";
             tao::json::value QFam = tao::json::empty_object;
 
-            QFam["queueFlags"] = amVK_2D_QFAM_PROPs[i][j].queueFlags;
-            QFam["queueCount"] = amVK_2D_QFAM_PROPs[i][j].queueCount;
-            QFam["timestampValidBits"] = amVK_2D_QFAM_PROPs[i][j].timestampValidBits;
+            QFam["queueFlags"] = amVK_2D_GPUs_QFAMs[i][j].queueFlags;
+            QFam["queueCount"] = amVK_2D_GPUs_QFAMs[i][j].queueCount;
+            QFam["timestampValidBits"] = amVK_2D_GPUs_QFAMs[i][j].timestampValidBits;
 
             tao::json::value minImageTransferGranularity = tao::json::empty_object;
-            minImageTransferGranularity["width"] = amVK_2D_QFAM_PROPs[i][j].minImageTransferGranularity.width;
-            minImageTransferGranularity["height"] = amVK_2D_QFAM_PROPs[i][j].minImageTransferGranularity.height;
-            minImageTransferGranularity["depth"] = amVK_2D_QFAM_PROPs[i][j].minImageTransferGranularity.depth;
+            minImageTransferGranularity["width"] = amVK_2D_GPUs_QFAMs[i][j].minImageTransferGranularity.width;
+            minImageTransferGranularity["height"] = amVK_2D_GPUs_QFAMs[i][j].minImageTransferGranularity.height;
+            minImageTransferGranularity["depth"] = amVK_2D_GPUs_QFAMs[i][j].minImageTransferGranularity.depth;
 
             QFam["minImageTransferGranularity"] = minImageTransferGranularity;
             GPU[key] = QFam;

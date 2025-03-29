@@ -57,7 +57,7 @@ struct REY_Array {
   }
 };
 
-
+#define REY_Array_LOOP(_arr_, _iter_)for (uint32_t _iter_ = 0, lim = _arr_.n;                   _iter_ < lim; _iter_++)
 
 
 #ifdef REY_UTILS_IMPLIMENTATION
@@ -96,11 +96,13 @@ struct REY_Array {
 // Usage:- REY_ARRAY_PUSH_BACK(integer_array) = 10;
 //         REY_ARRAY_PUSH_BACK(string_array) = "Hello World";
 
-#define REY_ARRAY_PUSH_BACK_SAFE(var) var.data[var.neXt++]
+// use "SAFE" variants, when you "know" there is enough space
+#define REY_ARRAY_PUSH_BACK_SAFE(var)    var.data[var.neXt++]
+#define REY_ArrayDYN_PUSH_BACK_SAFE(var) var.data[var.neXt++]
+#define REY_ArrayDYN_PUSH_BACK(var) \
+    if (var.should_resize()) {var.resize();} \
+        var.data[var.neXt++]
 
-#define REY_ArrayDYN_PUSH_BACK(var)      REY_ARRAY_PUSH_BACK(var)
-#define REY_ArrayDYN_PUSH_BACK_SAFE(var) REY_ARRAY_PUSH_BACK_SAFE(var)
-// Its like you are flagging it 'SAFE'
 
 #define REY_ARRAY_IS_ELEMENT(array, bool_var, match_what) \
       for (uint32_t i = 0; i < array.n; i++) { \
@@ -154,6 +156,14 @@ struct REY_ArrayDYN : public REY_Array<T> {
   inline bool should_resize(void) { return (bool)(this->neXt >= this->n); }
 
   /**
+   * also see:- Preprocessor Macro:- `REY_ArrayDYN_PUSH_BACK()`
+   */
+  inline void push_back(T& element) {
+    if (should_resize()) {resize();}
+    this->data[neXt++] = element;
+  }
+
+  /**
    * data[n] = data[neXt-1]
    * masterly advisory. unsteady content
    */
@@ -174,14 +184,22 @@ struct REY_ArrayDYN : public REY_Array<T> {
 
 template<typename T>
 void REY_ArrayDYN<T>::resize(double size_mul) {
-  REY_LOG_EX("Resizing array :( " << this->n);
-  
-  REY_ArrayDYN<T> _NewArray(this->n*size_mul);
-  REY_memcpy(_NewArray.data, this->data, this->n * sizeof(T));
-  delete[] this->data;
+  REY_LOG("Resizing array");
 
-  this->data = _NewArray.data;
-  this->n = _NewArray.n;
+  if (this->n == 0) {
+    this->data = new T[1];
+    this->n = 1;
+  }
+  else {
+    REY_ArrayDYN<T> _NewArray(this->n*size_mul);
+    REY_memcpy(_NewArray.data, this->data, this->n * sizeof(T));
+    delete[] this->data;
+
+    this->data = _NewArray.data;
+    this->n = _NewArray.n;
+  }
+
+  REY_LOG("Resizing Done");
 }
 
 

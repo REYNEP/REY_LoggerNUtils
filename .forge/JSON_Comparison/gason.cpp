@@ -11,18 +11,18 @@ void amVK_Instance::ExportJSON(void) {
         std::string gpuKey = toSTR(&amVK_GPU_List[i]);
         JsonValue GPU = json_object();
 
-        for (int j = 0, lim = amVK_2D_QFAM_PROPs[i].n; j < lim; j++) {
+        for (int j = 0, lim = amVK_2D_GPUs_QFAMs[i].n; j < lim; j++) {
             std::string key = "QueueFamily" + std::to_string(j) + "_Properties";
             JsonValue QFam = json_object();
 
-            json_object_set(QFam, "queueFlags", json_integer(amVK_2D_QFAM_PROPs[i][j].queueFlags));
-            json_object_set(QFam, "queueCount", json_integer(amVK_2D_QFAM_PROPs[i][j].queueCount));
-            json_object_set(QFam, "timestampValidBits", json_integer(amVK_2D_QFAM_PROPs[i][j].timestampValidBits));
+            json_object_set(QFam, "queueFlags", json_integer(amVK_2D_GPUs_QFAMs[i][j].queueFlags));
+            json_object_set(QFam, "queueCount", json_integer(amVK_2D_GPUs_QFAMs[i][j].queueCount));
+            json_object_set(QFam, "timestampValidBits", json_integer(amVK_2D_GPUs_QFAMs[i][j].timestampValidBits));
 
             JsonValue minImageTransferGranularity = json_object();
-            json_object_set(minImageTransferGranularity, "width", json_integer(amVK_2D_QFAM_PROPs[i][j].minImageTransferGranularity.width));
-            json_object_set(minImageTransferGranularity, "height", json_integer(amVK_2D_QFAM_PROPs[i][j].minImageTransferGranularity.height));
-            json_object_set(minImageTransferGranularity, "depth", json_integer(amVK_2D_QFAM_PROPs[i][j].minImageTransferGranularity.depth));
+            json_object_set(minImageTransferGranularity, "width", json_integer(amVK_2D_GPUs_QFAMs[i][j].minImageTransferGranularity.width));
+            json_object_set(minImageTransferGranularity, "height", json_integer(amVK_2D_GPUs_QFAMs[i][j].minImageTransferGranularity.height));
+            json_object_set(minImageTransferGranularity, "depth", json_integer(amVK_2D_GPUs_QFAMs[i][j].minImageTransferGranularity.depth));
 
             json_object_set(QFam, "minImageTransferGranularity", minImageTransferGranularity);
             json_object_set(GPU, key.c_str(), QFam);

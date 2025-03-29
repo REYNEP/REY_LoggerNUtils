@@ -184,6 +184,15 @@ Way 5:- Ninja/MakeFiles + Python Downloader Script [TBA]
         - `Documentation`:- [HEAD/docs][7]
         - ----
 
+[1]: https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs/mozilla_brown_bag_talk.md
+[2]: https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs/linux_starter_guide.md
+[3]: https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs/mac_breakpad_starter_guide.md
+[4]: https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs/windows_client_integration.md
+[5]: https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs/processor_design.md
+[6]: https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs/stack_walking.md
+[7]: https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs
+[8]: ./BREAKPAD_ChatGPT_CheatSheet.md
+
 3. YAML & JSON
     1. `rapidyaml`:
         - `Official Repo`:- https://github.com/biojppm/rapidyaml
@@ -194,22 +203,15 @@ Way 5:- Ninja/MakeFiles + Python Downloader Script [TBA]
         - `CheatSheet / Code Examples`:- CHATGPT/DeepSeek/AI or https://rapidyaml.readthedocs.io/latest/doxygen/group__doc__quickstart.html
     2. `taocpp-json`:
         - `Official Repo`:- https://github.com/taocpp/json
+        - `Documentation`:- https://github.com/taocpp/json/blob/main/doc/Value-Class.md
         - not including this in `REY_LoggerNUtils/CMakeLists.txt`
         - but you can use the `REY_FetchV4` files & just include it yourself
     3. `yyjson`:
         - `Official Repo`:- https://github.com/ibireme/yyjson
+        - https://ibireme.github.io/yyjson/doc/doxygen/html/yyjson_8h.html#a13c39f37c6936907c266ba9c076dd741
     4. `nlohmannJSON`:
         - `Official Repo`:- https://github.com/nlohmann/json
     
-[1]: https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs/mozilla_brown_bag_talk.md
-[2]: https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs/linux_starter_guide.md
-[3]: https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs/mac_breakpad_starter_guide.md
-[4]: https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs/windows_client_integration.md
-[5]: https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs/processor_design.md
-[6]: https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs/stack_walking.md
-[7]: https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs
-[8]: ./BREAKPAD_ChatGPT_CheatSheet.md
-
 <div style="page-break-after: always;"></div> 
 
 ```py

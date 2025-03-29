@@ -18,17 +18,17 @@ void amVK_Instance::ExportJSON(void) {
         nlohmann::ordered_json GPU_k = nlohmann::ordered_json::object();
         nlohmann::ordered_json QFAM_Array = nlohmann::ordered_json::object(); 
 
-        for (int i = 0, lim = amVK_2D_QFAM_PROPs[k].n; i < lim; i++) {
+        for (int i = 0, lim = amVK_2D_GPUs_QFAMs[k].n; i < lim; i++) {
             nlohmann::ordered_json QFAM_i = nlohmann::ordered_json::object();
 
-            QFAM_i["queueFlags"] = amVK_2D_QFAM_PROPs[k][i].queueFlags;
-            QFAM_i["queueCount"] = amVK_2D_QFAM_PROPs[k][i].queueCount;
-            QFAM_i["timestampValidBits"] = amVK_2D_QFAM_PROPs[k][i].timestampValidBits;
+            QFAM_i["queueFlags"] = amVK_2D_GPUs_QFAMs[k][i].queueFlags;
+            QFAM_i["queueCount"] = amVK_2D_GPUs_QFAMs[k][i].queueCount;
+            QFAM_i["timestampValidBits"] = amVK_2D_GPUs_QFAMs[k][i].timestampValidBits;
 
             nlohmann::ordered_json minImageTransferGranularity = nlohmann::json::object();
-            minImageTransferGranularity["width"] = amVK_2D_QFAM_PROPs[k][i].minImageTransferGranularity.width;
-            minImageTransferGranularity["height"] = amVK_2D_QFAM_PROPs[k][i].minImageTransferGranularity.height;
-            minImageTransferGranularity["depth"] = amVK_2D_QFAM_PROPs[k][i].minImageTransferGranularity.depth;
+            minImageTransferGranularity["width"] = amVK_2D_GPUs_QFAMs[k][i].minImageTransferGranularity.width;
+            minImageTransferGranularity["height"] = amVK_2D_GPUs_QFAMs[k][i].minImageTransferGranularity.height;
+            minImageTransferGranularity["depth"] = amVK_2D_GPUs_QFAMs[k][i].minImageTransferGranularity.depth;
 
             QFAM_i["minImageTransferGranularity"] = minImageTransferGranularity;
 

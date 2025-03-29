@@ -11,18 +11,18 @@ void amVK_Instance::ExportJSON(void) {
         std::string gpuKey = toSTR(&amVK_GPU_List[i]);
         yyjson_mut_val *GPU = yyjson_mut_obj(doc);
 
-        for (int j = 0, lim = amVK_2D_QFAM_PROPs[i].n; j < lim; j++) {
+        for (int j = 0, lim = amVK_2D_GPUs_QFAMs[i].n; j < lim; j++) {
             std::string key = "QueueFamily" + std::to_string(j) + "_Properties";
             yyjson_mut_val *QFam = yyjson_mut_obj(doc);
 
-            yyjson_mut_obj_add_int(doc, QFam, "queueFlags", amVK_2D_QFAM_PROPs[i][j].queueFlags);
-            yyjson_mut_obj_add_int(doc, QFam, "queueCount", amVK_2D_QFAM_PROPs[i][j].queueCount);
-            yyjson_mut_obj_add_int(doc, QFam, "timestampValidBits", amVK_2D_QFAM_PROPs[i][j].timestampValidBits);
+            yyjson_mut_obj_add_int(doc, QFam, "queueFlags", amVK_2D_GPUs_QFAMs[i][j].queueFlags);
+            yyjson_mut_obj_add_int(doc, QFam, "queueCount", amVK_2D_GPUs_QFAMs[i][j].queueCount);
+            yyjson_mut_obj_add_int(doc, QFam, "timestampValidBits", amVK_2D_GPUs_QFAMs[i][j].timestampValidBits);
 
             yyjson_mut_val *minImageTransferGranularity = yyjson_mut_obj(doc);
-            yyjson_mut_obj_add_int(doc, minImageTransferGranularity, "width", amVK_2D_QFAM_PROPs[i][j].minImageTransferGranularity.width);
-            yyjson_mut_obj_add_int(doc, minImageTransferGranularity, "height", amVK_2D_QFAM_PROPs[i][j].minImageTransferGranularity.height);
-            yyjson_mut_obj_add_int(doc, minImageTransferGranularity, "depth", amVK_2D_QFAM_PROPs[i][j].minImageTransferGranularity.depth);
+            yyjson_mut_obj_add_int(doc, minImageTransferGranularity, "width", amVK_2D_GPUs_QFAMs[i][j].minImageTransferGranularity.width);
+            yyjson_mut_obj_add_int(doc, minImageTransferGranularity, "height", amVK_2D_GPUs_QFAMs[i][j].minImageTransferGranularity.height);
+            yyjson_mut_obj_add_int(doc, minImageTransferGranularity, "depth", amVK_2D_GPUs_QFAMs[i][j].minImageTransferGranularity.depth);
 
             yyjson_mut_obj_add_val(doc, QFam, "minImageTransferGranularity", minImageTransferGranularity);
             yyjson_mut_obj_add_val(doc, GPU, key.c_str(), QFam);

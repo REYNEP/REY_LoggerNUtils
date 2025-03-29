@@ -1,3 +1,4 @@
+#pragma once
 #ifndef REY_TYPES_use_stdint
     typedef signed char        int8_t;
     typedef short              int16_t;
