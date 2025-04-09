@@ -122,4 +122,7 @@
         # ${Git_CloneDir_Name}/src/fmt.cc
         # ${Git_CloneDir_Name} folder itself is inside ${REY_FETCH_${TN}_BASE_DIR} --> We will handle that part
     )
+    set(Git_AddSubdirectory OFF)
+        # CS50 doesn't have any CMakeLists.txt
+        # So, We will write write our own for it, in `REY_FetchV4.libcs50.cmake` 😊
 # --------------------

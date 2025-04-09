@@ -4,6 +4,7 @@
   #include "REY_Logger.hh"
 #endif
 #include "REY_Types.hh"
+#include "REY_STDWrap.hh"
 
 /** 
  *  ╻ ╻   ┏━┓┏┳┓╻ ╻╻┏    ┏━┓┏━┓┏━┓┏━┓╻ ╻
@@ -61,16 +62,6 @@ struct REY_Array {
 
 
 #ifdef REY_UTILS_IMPLIMENTATION
-  #include "string.h"
-  #include "stdlib.h"
-  void *REY_memcpy(void *to, void *from, size_t size) {
-    return memcpy(to, from, size);
-  }
-
-  void *REY_malloc(size_t size) {
-    return malloc(size);
-  }
-
   void REY_ARRAY_PUSH_BACK_FILLED_LOG(uint32_t n, const char *var_name) { 
     if (n == 0) { 
       REY_LOG_EX("REY_Array<> " << var_name << ".n = 0;" << "Did you malloc? amASSERT here" << REY::endl); 
@@ -80,8 +71,6 @@ struct REY_Array {
     }
   }
 #else
-  void *REY_malloc(size_t size);
-  void *REY_memcpy(void *to, void *from, size_t size);
   void REY_ARRAY_PUSH_BACK_FILLED_LOG(uint32_t n, const char *var_name);
 #endif
 
@@ -158,7 +147,7 @@ struct REY_ArrayDYN : public REY_Array<T> {
   /**
    * also see:- Preprocessor Macro:- `REY_ArrayDYN_PUSH_BACK()`
    */
-  inline void push_back(T& element) {
+  inline void push_back(const T& element) {
     if (should_resize()) {resize();}
     this->data[neXt++] = element;
   }

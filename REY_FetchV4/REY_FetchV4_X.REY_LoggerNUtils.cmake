@@ -24,4 +24,5 @@
         ${Git_CloneDir_Name}/REY_Logger.hh
         ${Git_CloneDir_Name}/REY_Logger.cpp
     )
+    set(Git_AddSubdirectory ON)
 # --------------------

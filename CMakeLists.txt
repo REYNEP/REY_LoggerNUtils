@@ -37,8 +37,12 @@ project("REY_LoggerNUtils_PROJECT" VERSION 0.1)
 # --------------------
 add_library                (REY_LoggerNUtils ${SRC})
 target_include_directories (REY_LoggerNUtils PUBLIC ${INC})
-set_target_properties      (REY_LoggerNUtils  PROPERTIES  OUTPUT_NAME "lib-REY_LoggerNUtils"  PREFIX "")
+set_target_properties      (REY_LoggerNUtils PROPERTIES  OUTPUT_NAME "lib-REY_LoggerNUtils"  PREFIX "")
 set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/.install CACHE PATH "" FORCE)
+
+# --------cs50--------
+    #include(${CMAKE_CURRENT_SOURCE_DIR}/REY_FetchV4/REY_FetchV4.libcs50.cmake)
+    #target_link_libraries  (REY_LoggerNUtils PUBLIC cs50)
 
 # --------fmt---------
     #                                    input:- ${REY_FETCH_FMT_BASE_DIR]

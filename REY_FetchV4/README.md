@@ -24,6 +24,13 @@
 - Rest of the document is dedicated to answer this question 😊
 ### 
 
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
 <div style="page-break-after: always;"></div>
 
 ## 🎨 V4 [Short]
@@ -60,6 +67,21 @@ Pseudocode inside REY_FetchV4.cmake
 ## 👀 Official Alternative:- `FetchContent_MakeAvailable()`
 example:- https://rapidyaml.readthedocs.io/latest/sphinx_using.html#quickstart-build-samples
 
+## 🛠️ CMake Issues/Problems
+1. Environment Variables `$ENV{VULKAN_SDK}` will give you `C:\\nitro\\VulkanSDK1.4\\` on windows
+    - Now if you try to run `find_path()` using that
+        - MSVC (Visual Studio Build Tools) -> Works!
+        - Clang (Visual Studio Build Tools) -> Doesn't Work!
+            - the fix:- `file(TO_CMAKE_PATH "$ENV{VULKAN_SDK}"  VULKAN_SDK_PATH)`
+            - which converts the path to `C:/nitro/VulkanSDK1.4/`
+
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
 <div style="page-break-after: always;"></div>
 
 ## 🛠️ 1. How to add new Packages

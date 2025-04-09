@@ -134,7 +134,7 @@ if (  (DEFINED REY_SCOUT_${TN}_PATHS)   AND   (NOT "${REY_SCOUT_${TN}_PATHS}" ST
 
 
     # =============================== if BOTH ARE FOUND =================================
-        if (DEFINED REY_FOUND_${TN}_LIBRARY AND DEFINED REY_FOUND_${TN}_INCLUDE)
+        if ((DEFINED REY_FOUND_${TN}_LIBRARY) AND (DEFINED REY_FOUND_${TN}_INCLUDE))
             #         see Target_Name
             add_library(
                 ${Target_Name} STATIC 
@@ -281,8 +281,9 @@ else()
         #message(STATUS "tmp_stdout:- ${tmp_stdout}")
          message(STATUS "Fetching Done")
 
-
-        add_subdirectory(${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name})    #Output:- ${Target_Name}
+        if (Git_AddSubdirectory)
+            add_subdirectory(${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name})    #Output:- ${Target_Name}
+        endif()
     else()
         if (Git_Clone_Recursive) # Input Option from REY_FetchV4_X
             message(STATUS "Make sure Recursive Cloning was done for ${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name}")
@@ -306,7 +307,9 @@ else()
                                      see .REY_FetchV3.cmake TOP Documentation part for INPUT-Settings/Variables")
             endif()
         endforeach()
-        add_subdirectory(${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name})    #Output:- ${Target_Name}
+        if (Git_AddSubdirectory)
+            add_subdirectory(${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name})    #Output:- ${Target_Name}
+        endif()
     endif()
 
 

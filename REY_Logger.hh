@@ -454,10 +454,10 @@ static void bli_windows_system_backtrace_exception_record(FILE* fp, PEXCEPTION_R
     fprintf(fp, "Exception Address     : 0x%p\n", record->ExceptionAddress);
     bli_windows_get_module_name(record->ExceptionAddress, module, sizeof(module));
     fprintf(fp, "Exception Module      : %s\n", module);
-    fprintf(fp, "Exception Flags       : 0x%.8x\n", record->ExceptionFlags);
-    fprintf(fp, "Exception Parameters  : 0x%x\n", record->NumberParameters);
+    fprintf(fp, "Exception Flags       : 0x%.8x\n", (unsigned int)record->ExceptionFlags);
+    fprintf(fp, "Exception Parameters  : 0x%x\n", (unsigned int)record->NumberParameters);
     for (DWORD idx = 0; idx < record->NumberParameters; idx++) {
-        fprintf(fp, "\tParameters[%d] : 0x%p\n", idx, (LPVOID*)record->ExceptionInformation[idx]);
+        fprintf(fp, "\tParameters[%d] : 0x%p\n", (int)idx, (LPVOID*)record->ExceptionInformation[idx]);
     }
     if (record->ExceptionRecord) {
         fprintf(fp, "Nested ");
@@ -508,7 +508,7 @@ static bool BLI_windows_system_backtrace_run_trace(FILE* fp, HANDLE hThread, PCO
                     DWORD displacement = 0;
                     if (SymGetLineFromAddr(
                         GetCurrentProcess(), (DWORD64)(frame.AddrPC.Offset), &displacement, &lineinfo)) {
-                        fprintf(fp, " %s:%d", lineinfo.FileName, lineinfo.LineNumber);
+                        fprintf(fp, " %s:%d", lineinfo.FileName, (int)lineinfo.LineNumber);
                     }
                     fprintf(fp, "\n");
                 }
@@ -546,7 +546,7 @@ static bool bli_windows_system_backtrace_stack_thread(FILE* fp, HANDLE hThread)
         bool success = GetThreadContext(hThread, &context);
         ResumeThread(hThread);
         if (!success) {
-            fprintf(fp, "Cannot get thread context : 0x0%.8x\n", GetLastError());
+            fprintf(fp, "Cannot get thread context : 0x0%.8x\n", (unsigned int) GetLastError());
             return false;
         }
     }
@@ -616,7 +616,7 @@ static void bli_windows_system_backtrace_threads(FILE* fp)
     do {
         if (te32.th32OwnerProcessID == GetCurrentProcessId()) {
             if (GetCurrentThreadId() != te32.th32ThreadID) {
-                fprintf(fp, "Thread : %.8x\n", te32.th32ThreadID);
+                fprintf(fp, "Thread : %.8x\n", (unsigned int)te32.th32ThreadID);
                 HANDLE ht = OpenThread(THREAD_ALL_ACCESS, FALSE, te32.th32ThreadID);
                 bli_windows_system_backtrace_stack_thread(fp, ht);
                 CloseHandle(ht);
@@ -688,8 +688,8 @@ static void bli_load_symbols()
                         fprintf(stderr,
                             "Error loading symbols %s\n\terror:0x%.8x\n\tsize = %d\n\tbase=0x%p\n",
                             pdb_file,
-                            GetLastError(),
-                            file_data.nFileSizeLow,
+                            (unsigned int) GetLastError(),
+                            (int) file_data.nFileSizeLow,
                             (LPVOID)mod);
                     }
                 }
@@ -736,7 +736,7 @@ static void BLI_windows_handle_exception(EXCEPTION_POINTERS* exception)
         CHAR modulename[MAX_PATH];
         bli_windows_get_module_name(address, modulename, sizeof(modulename));
         fprintf(stderr, "Module  : %s\n", modulename);
-        fprintf(stderr, "Thread  : %.8x\n", GetCurrentThreadId());
+        fprintf(stderr, "Thread  : %.8x\n", (unsigned int) GetCurrentThreadId());
     }
     fflush(stderr);
 }

@@ -23,5 +23,6 @@
         ${Git_CloneDir_Name}/CMakeLists.txt
         ${Git_CloneDir_Name}/include/nlohmann/json.hpp
     )
+    set(Git_AddSubdirectory ON)
         # add_library(nlohmann_json)
 # --------------------

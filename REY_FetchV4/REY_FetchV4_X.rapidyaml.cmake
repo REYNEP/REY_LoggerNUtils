@@ -23,4 +23,5 @@
         ${Git_CloneDir_Name}/CMakeLists.txt
         ${Git_CloneDir_Name}/src/ryml.hpp
     )
+    set(Git_AddSubdirectory ON)
 # --------------------

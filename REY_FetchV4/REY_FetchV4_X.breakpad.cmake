@@ -25,4 +25,5 @@
     set(Git_CloneDir_Name)
     set(Git_Clone_Recursive OFF)
     set(Git_CheckFiles)
+    set(Git_AddSubdirectory OFF)
 # --------------------

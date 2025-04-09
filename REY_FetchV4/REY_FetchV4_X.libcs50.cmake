@@ -1,5 +1,5 @@
 # -------------------- SEE DOCUMENTATION in https://github.com/REYNEP/REY_LoggerNUtils/blob/main/REY_FetchV4/REY_FetchV4_X_DOCS.cmake -------------------- #
-    set(Tool_Name taojson)
+    set(Tool_Name libcs50)
     set(TN ${Tool_Name})
 
     # Way-1. REY_SCOUT_${TN}_PATHS -------> Trying to Find    [if] [REY_SCOUT_${TN}_PATHS != empty]
@@ -16,13 +16,17 @@
 
     # Way-4. REY_FETCH_${TN}_BASE_DIR ----> Git Clone         [else]
     set(REY_FETCH_${TN}_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.forge)
-    set(Git_Link "https://github.com/taocpp/json")
-    set(Git_CloneDir_Name taojson)
-    set(Git_Clone_Recursive ON)
+    set(Git_Link "https://github.com/cs50/libcs50")
+    set(Git_CloneDir_Name libcs50)
+    set(Git_Clone_Recursive OFF)
     set(Git_CheckFiles
-        ${Git_CloneDir_Name}/CMakeLists.txt
-        ${Git_CloneDir_Name}/include/tao/json.hpp
+        ${Git_CloneDir_Name}/src/cs50.h
+        ${Git_CloneDir_Name}/src/cs50.c
     )
-    set(Git_AddSubdirectory ON)
-        # add_library(taocpp::json)
+    set(Git_AddSubdirectory OFF)
+        # CS50 doesn't have any CMakeLists.txt
+        # So, We will write write our own for it, in `REY_FetchV4.libcs50.cmake` 😊
+
+        # NOTE: You can't build cs50 without GCC/Clang
+        #       |- MSVC build is not supported
 # --------------------

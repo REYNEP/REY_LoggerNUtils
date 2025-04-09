@@ -23,5 +23,6 @@
         ${Git_CloneDir_Name}/CMakeLists.txt
         ${Git_CloneDir_Name}/src/yyjson.c
     )
+    set(Git_AddSubdirectory ON)
         # add_library(yyjson)
 # --------------------
