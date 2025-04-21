@@ -25,6 +25,7 @@ struct REY_Array {
   REY_Array(void) {data = nullptr; n = 0; neXt = 0;}
   ~REY_Array() {}
 
+
   /** 
    * inline hugely optimizes it, 
    * [the next inline copy-assignment func below too!] 
@@ -52,9 +53,25 @@ struct REY_Array {
     return *this;
   }
 
+  /** WIP
+      // New constructor for initializer lists
+  REY_Array(std::initializer_list<T> list) {
+    data = new T[n];
+    n = list.size();
+    memcpy(data, list.begin(), n * sizeof(T));
+    neXt = n;
+  }
+   */
+
   inline void reserve(uint32_t N) {
     data = new T[N];
     n = N;
+    neXt = 0;
+  }
+  inline void free(void) {
+    delete data;
+    n = 0;
+    neXt = 0;
   }
 };
 
@@ -119,7 +136,11 @@ struct REY_ArrayDYN : public REY_Array<T> {
   // Constructor that forwards parameters to the base class constructor
     REY_ArrayDYN(T* data, uint32_t n, uint32_t neXt) : REY_Array<T>(data, n, neXt) {}
     REY_ArrayDYN(T* data, uint32_t n) : REY_Array<T>(data, n) {}
-    REY_ArrayDYN(void) : REY_Array<T>() {} 
+    REY_ArrayDYN(void) : REY_Array<T>() {
+        this->data = nullptr;
+        this->n = 0;
+        this->neXt = 0;
+    } 
 
   using REY_Array<T>::n;
   using REY_Array<T>::neXt;

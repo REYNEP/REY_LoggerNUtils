@@ -1,5 +1,7 @@
 #pragma once
 
+// So that we don't have to include thousands of lines of code in every single Header/Translation unit 💁‍♀️
+
 #ifdef _WIN32
     #define REY_TYPES_use_custom_definitions
 #endif
