@@ -75,8 +75,12 @@ struct REY_Array {
   }
 };
 
-#define REY_Array_LOOP(_arr_, _iter_)for (uint32_t _iter_ = 0, lim = _arr_.n;                   _iter_ < lim; _iter_++)
-
+#define REY_Array_LOOP(_arr_, _iter_) for (uint32_t _iter_ = 0, lim = _arr_.n;                   _iter_ < lim; _iter_++)
+#define REY_Array_RESERVE(_arr_, N, _VALUE_) \
+                _arr_.reserve(N); \
+REY_Array_LOOP (_arr_, k) {  \
+                _arr_[k] = _VALUE_;  \
+}
 
 #ifdef REY_UTILS_IMPLIMENTATION
   void REY_ARRAY_PUSH_BACK_FILLED_LOG(uint32_t n, const char *var_name) { 
