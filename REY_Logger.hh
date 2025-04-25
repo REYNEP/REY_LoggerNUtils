@@ -26,6 +26,7 @@
 #pragma once
 #ifndef REY_LOGGER_HH
 #define REY_LOGGER_HH
+#include "REY_Types.hh"
 
 
 #define REY_LOG(x) REY::cout << x << REY::endl;
@@ -141,6 +142,7 @@ public:
     void init(void);
     void log(void);
     double get(void);
+    static void wait(uint64_t ms);
 };
 
 /** Make a array of this STRUCT (like below), then pass the  .time_spent to TIMER_STORE
@@ -274,6 +276,11 @@ void REY_NoobTimer::log(void) {
 double REY_NoobTimer::get(void) {
     m_NoobTimer->time_now = std::chrono::high_resolution_clock::now();
     return (double)((std::chrono::duration<double>)(m_NoobTimer->time_now - m_NoobTimer->time_start)).count();
+}
+
+#include <thread>
+void REY_NoobTimer::wait(uint64_t ms) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(ms));
 }
 #endif
 

@@ -64,6 +64,7 @@ struct REY_Array {
    */
 
   inline void reserve(uint32_t N) {
+    if (N == 0) {return;}
     data = new T[N];
     n = N;
     neXt = 0;
