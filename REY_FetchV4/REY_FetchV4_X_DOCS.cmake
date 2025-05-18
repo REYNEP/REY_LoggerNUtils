@@ -7,7 +7,8 @@
 #       1. REY_SCOUT_${TN}_PATHS -------> Trying to Find    [if] [REY_SCOUT_${TN}_PATHS != empty]
 #       2. Git_SubModule ---------------> Git SubModule     [elseif] [Git_SubModule != empty][Already Done:- `git submodule add <link> path/to/folder`]
 #       3. Zip_Links -------------------> cmake Download    [elseif] [Zip_Links != empty]
-#       4. REY_FETCH_${TN}_BASE_DIR ----> Git Clone         [else]
+#       4. REY_FETCH_${TN}_BASE_DIR ----> Git Clone         [elseif] [Git_Link != empty]
+#       5. SingleFile_Link          ----> Single Header     [elseif] [SingleFile_Link != empty]
 #
 # OUTPUT Options:-
 #       [Way-1] ${REY_FOUND_${TN}_LIBRARY}  ---> CACHED String to where ${Binary_Hints} is located
@@ -15,7 +16,7 @@
 #       [Way-1] add_library(${Target_Name}) ---> ${Target_Name} is an option below 
 #
 # --------------------
-    set(Tool_Name           # usually i set this ==> into this file's name `REY_FetchV4_X.vulkan.cmake` 😊
+    set(Tool_Name           # usually i set this ==> into this file's name ==> e.g. `REY_FetchV4_X.fmt.cmake` 😊
         fmt
         # Tool_Name = CMAKE Variables will be created based on this. List of variables below inside set(TN)
         # Tool = "External Library" but i really don't like calling SMALL Stuffs "Library" yk
@@ -125,4 +126,18 @@
     set(Git_AddSubdirectory OFF)
         # CS50 doesn't have any CMakeLists.txt
         # So, We will write write our own for it, in `REY_FetchV4.libcs50.cmake` 😊
+
+#    _  _    __          __                _____ 
+#  _| || |_  \ \        / /               | ____|
+# |_  __  _|  \ \  /\  / /_ _ _   _ ______| |__  
+#  _| || |_    \ \/  \/ / _` | | | |______|___ \ 
+# |_  __  _|    \  /\  / (_| | |_| |       ___) |
+#   |_||_|       \/  \/ \__,_|\__, |      |____/ 
+#                              __/ |             
+#                             |___/              
+    set(SingleFile_Link https://raw.githubusercontent.com/google/wuffs/7250990196ab0306f16b639feefbbca4d5323080/release/c/wuffs-v0.4.c)
+    set(SingleFile_Name wuffs-v0.4.c)
+    set(SingleFile_Dir ${CMAKE_CURRENT_SOURCE_DIR}/.forge/wuffs)
+    set(SingleFile_InterfaceTarget REY_FetchV4_wuffs)                        # cmake doesn't allow "::" e.g. `REY_FetchV4::wuffs` for INTERFACE Targets
+    set(SingleFile_ShowProgress OFF)
 # --------------------

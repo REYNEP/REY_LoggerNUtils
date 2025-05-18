@@ -52,6 +52,10 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/.install CACHE PATH "" FORC
 # ------breakpad------
     include(${CMAKE_CURRENT_SOURCE_DIR}/REY_FetchV4/REY_FetchV4.breakpad.cmake)
 
+# -------wuffs--------
+    include(${CMAKE_CURRENT_SOURCE_DIR}/REY_FetchV4/REY_FetchV4.wuffs.cmake)
+    target_link_libraries(amGHOST PUBLIC REY_FetchV4_wuffs)
+
 # -----rapidyaml------
     include(${CMAKE_CURRENT_SOURCE_DIR}/REY_FetchV4/REY_FetchV4.rapidyaml.cmake)
     target_link_libraries  (REY_LoggerNUtils PUBLIC ryml::ryml)

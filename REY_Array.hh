@@ -84,6 +84,9 @@ struct REY_Array {
     }
     ================================================================================================ */
 };
+#pragma endregion
+
+
 
 
 
@@ -91,6 +94,7 @@ struct REY_Array {
 
 
 #pragma region MACROS
+
 // Prefix:- _x_ [underscored suffix + prefix] --> specify a variable name. You can use this variable 
 
 #define REY_Array_LOOP(ARRAY,               _k_)      for (uint32_t _k_ = 0, lim = ARRAY.neXt; _k_ < lim; _k_++)
@@ -133,7 +137,7 @@ struct REY_Array {
     //         REY_ARRAY_PUSH_BACK(string_array)  = "Hello World";
 /** =========================       PUSH BACK      ========================= */
 
-
+#pragma endregion
 
 
 
@@ -237,6 +241,7 @@ void REY_ArrayDYN<T>::resize(double size_mul) {
     REY_LOG("Resizing Done");
 }
 
+#pragma endregion
 
 /**  ============================================== GodBolt Test ==============================================
 

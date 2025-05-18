@@ -25,4 +25,11 @@
     )
     set(Git_AddSubdirectory ON)
         # add_library(nlohmann_json)
+
+    # Way-5. Download Single Header/.cpp file based library
+    set(SingleFile_Link)
+    set(SingleFile_Name)
+    set(SingleFile_Dir)
+    set(SingleFile_InterfaceTarget)
+    set(SingleFile_ShowProgress OFF)
 # --------------------

@@ -28,7 +28,7 @@
 #define REY_LOGGER_HH
 #include "REY_Types.hh"
 
-
+#define REY_LOG_NoNewLine(x) REY::cout << x << "     |     ";
 #define REY_LOG(x) REY::cout << x << REY::endl;
 #define REY_LOG_LOOP(log_heading, iterator_var, loop_limit, log_inside_loop) \
     REY_LOG(""); \

@@ -1,5 +1,5 @@
 # -------------------- SEE DOCUMENTATION in https://github.com/REYNEP/REY_LoggerNUtils/blob/main/REY_FetchV4/REY_FetchV4_X_DOCS.cmake -------------------- #
-    set(Tool_Name yyjson)
+    set(Tool_Name wuffs)
     set(TN ${Tool_Name})
 
     # Way-1. REY_SCOUT_${TN}_PATHS -------> Trying to Find    [if] [REY_SCOUT_${TN}_PATHS != empty]
@@ -15,21 +15,17 @@
     set(Zip_Links)
 
     # Way-4. REY_FETCH_${TN}_BASE_DIR ----> Git Clone         [else]
-    set(REY_FETCH_${TN}_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.forge)
-    set(Git_Link "https://github.com/ibireme/yyjson")
-    set(Git_CloneDir_Name yyjson)
+    set(REY_FETCH_${TN}_BASE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/.forge)
+    set(Git_Link)
+    set(Git_CloneDir_Name)
     set(Git_Clone_Recursive OFF)
-    set(Git_CheckFiles
-        ${Git_CloneDir_Name}/CMakeLists.txt
-        ${Git_CloneDir_Name}/src/yyjson.c
-    )
-    set(Git_AddSubdirectory ON)
-        # add_library(yyjson)
+    set(Git_CheckFiles)
+    set(Git_AddSubdirectory OFF)
 
     # Way-5. Download Single Header/.cpp file based library
-    set(SingleFile_Link)
-    set(SingleFile_Name)
-    set(SingleFile_Dir)
-    set(SingleFile_InterfaceTarget)
+    set(SingleFile_Link https://raw.githubusercontent.com/google/wuffs/7250990196ab0306f16b639feefbbca4d5323080/release/c/wuffs-v0.4.c)
+    set(SingleFile_Name wuffs-v0.4.c)
+    set(SingleFile_Dir ${CMAKE_CURRENT_SOURCE_DIR}/.forge/wuffs)
+    set(SingleFile_InterfaceTarget REY_FetchV4_wuffs)
     set(SingleFile_ShowProgress OFF)
 # --------------------

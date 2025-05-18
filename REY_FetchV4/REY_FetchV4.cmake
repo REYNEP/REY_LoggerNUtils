@@ -35,10 +35,10 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
     # else if(  (DEFINED Git_SubModule)   AND   (NOT "${Git_SubModule}" STREQUAL "")  )
         # git submodule init / update
 
-    # else if(   (DEFINED Zip_Links)     AND     (NOT "${Zip_Links}" STREQUAL "")  )
+    # else if(   (DEFINED Zip_Links)      AND     (NOT "${Zip_Links}"   STREQUAL "")  )
         # download ${Zip_Links} --> unzip
         
-    # else()
+    # else if(   (DEFINED Git_Link)       AND     (NOT "${Git_Link}"    STREQUAL "")  )
         # if( NOT EXISTS ${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name} )
             # git clone ${Git_Link}
             # add_subdirectory(${Git_CloneDir_Name})
@@ -49,6 +49,9 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
                 # add_subdirectory(${Git_CloneDir_Name})
             # endif()
         # endif()
+    
+    # elseif((DEFINED SingleFile_Link)    AND   (NOT "${SingleFile_Link}" STREQUAL "")  )
+        # 
     # endif()
 # ----------------------------------------
 
@@ -65,6 +68,7 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # --------------------
 if (  (DEFINED REY_SCOUT_${TN}_PATHS)   AND   (NOT "${REY_SCOUT_${TN}_PATHS}" STREQUAL "")  )
     message(STATUS "\n\nWay-1. Finding ${Binary_Hints} & ${Header_Name} in ${REY_SCOUT_${TN}_PATHS}")
+    message(STATUS "----------------------------------------")
     # ================================ FINDING ${Binary_Hints} =================================
         find_library(tmp_scout_${TN}_lib
             NAMES
@@ -161,8 +165,19 @@ if (  (DEFINED REY_SCOUT_${TN}_PATHS)   AND   (NOT "${REY_SCOUT_${TN}_PATHS}" ST
 
 
 
+
+
+
+
+
+
+
+
+
+
 elseif(  (DEFINED Git_SubModule)   AND   (NOT "${Git_SubModule}" STREQUAL "")  )
     message(STATUS "\n\nWay-2. Updating Submodule ${Git_SubModule}")
+    message(STATUS "----------------------------------------")
 
         message(STATUS "[UPDATING SUBMODULE]:- ${Git_SubModule}")
         message(STATUS "[Command Outputs in]:- ${CMAKE_CURRENT_SOURCE_DIR}/.forge/REY_FetchV4_git_submodule_stdout.log")
@@ -181,8 +196,19 @@ elseif(  (DEFINED Git_SubModule)   AND   (NOT "${Git_SubModule}" STREQUAL "")  )
         add_subdirectory(${Git_SubModule})    #Output:- ${Target_Name}
 
 
+
+
+
+
+
+
+
+
+
+
 elseif(  (DEFINED Zip_Links)   AND   (NOT "${Zip_Links}" STREQUAL "")  )
     message(STATUS "\n\nWay-3. Zip_Links")
+    message(STATUS "----------------------------------------")
 
     list(LENGTH Zip_Links N)
     math(EXPR N "${N} - 1")
@@ -235,8 +261,19 @@ elseif(  (DEFINED Zip_Links)   AND   (NOT "${Zip_Links}" STREQUAL "")  )
         endif()
     endforeach()
 
-else()
+
+
+
+
+
+
+
+
+
+
+elseif(   (DEFINED Git_Link)       AND     (NOT "${Git_Link}"    STREQUAL "")  )
     message(STATUS "\n\nWay-4. Clone/Fetching ${Git_Link} into ${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name}")
+    message(STATUS "----------------------------------------")
 
 
     if( (NOT EXISTS ${REY_FETCH_${TN}_BASE_DIR}/${Git_CloneDir_Name}) )
@@ -314,4 +351,61 @@ else()
 
 
 
+
+
+
+
+
+
+
+elseif(   (DEFINED SingleFile_Link)       AND     (NOT "${SingleFile_Link}"    STREQUAL "")  )
+    message(STATUS "\n\nWay-5: SingleFile_Link")
+    message(STATUS "----------------------------------------")
+    message(STATUS "SingleFile_Link: ${SingleFile_Link}")
+    message(STATUS "SingleFile_Name: ${SingleFile_Name}")
+    message(STATUS "SingleFile_Dir: ${SingleFile_Dir}")
+    message(STATUS "                        ")
+        
+    if(NOT EXISTS ${SingleFile_Dir}/${SingleFile_Name})
+        # Download the zip file
+        message(STATUS "Downloading ${SingleFile_Name}...")
+
+        # ======================  Download IT!  ======================
+        set(__show_progress__)
+        if (${SingleFile_ShowProgress})
+            set(__show_progress__ SHOW_PROGRESS)
+        endif()
+
+        file(
+            DOWNLOAD 
+            ${SingleFile_Link} 
+            ${SingleFile_Dir}/${SingleFile_Name} 
+            ${__show_progress__} 
+            TLS_VERIFY ON 
+            STATUS reported_status
+        ) # Auto Created the Directory (at least on windows)
+        # ======================  Download IT!  ======================
+
+        # ====================== Error Checking ======================
+            set (status_code)
+            list(GET reported_status   0   status_code)
+            if  (NOT status_code EQUAL 0)
+                list(GET reported_status 1 error_msg)
+                message(FATAL_ERROR "Download failed: ${error_msg}")
+            endif()
+
+            if(NOT EXISTS ${SingleFile_Dir}/${SingleFile_Name})
+                message(FATAL_ERROR "Download completed but file not found!")
+            endif()
+        # ====================== Error Checking ======================
+        
+        message(STATUS "Download successful")
+    endif()
+
+    # ====================== Add CMAKE Imported Library ======================
+    add_library                 (${SingleFile_InterfaceTarget} INTERFACE)
+    target_include_directories  (${SingleFile_InterfaceTarget} INTERFACE ${SingleFile_Dir})
+    message(STATUS "[REY_FetchV4_SCOUT]")
+    message(STATUS " REY_FetchV4_X.${TN}.cmake::SingleFile_InterfaceTarget:- ${SingleFile_InterfaceTarget}")
+    # ====================== Add CMAKE Imported Library ======================
 endif()

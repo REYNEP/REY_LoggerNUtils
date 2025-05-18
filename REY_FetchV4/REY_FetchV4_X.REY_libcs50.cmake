@@ -29,4 +29,11 @@
 
         # NOTE: You can't build cs50 without GCC/Clang
         #       |- MSVC build is not supported
+
+    # Way-5. Download Single Header/.cpp file based library
+    set(SingleFile_Link)
+    set(SingleFile_Name)
+    set(SingleFile_Dir)
+    set(SingleFile_InterfaceTarget)
+    set(SingleFile_ShowProgress OFF)
 # --------------------

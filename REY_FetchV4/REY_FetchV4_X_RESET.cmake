@@ -21,4 +21,11 @@
     set(Git_Clone_Recursive OFF)
     set(Git_CheckFiles)
     set(Git_AddSubdirectory ON)
+
+    # Way-5. Download Single Header/.cpp file based library
+    set(SingleFile_Link)
+    set(SingleFile_Name)
+    set(SingleFile_Dir)
+    set(SingleFile_InterfaceTarget)
+    set(SingleFile_ShowProgress OFF)
 # --------------------
